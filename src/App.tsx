@@ -1,26 +1,18 @@
 import emailjs from '@emailjs/browser';
-import { useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { FaLinkedin } from 'react-icons/fa'
 import {
   ArrowRight,
-  Building2,
-  ChevronLeft,
-  ChevronRight,
-  Cog,
-  Factory,
-  Globe2,
-  Landmark,
   Menu,
-Mail,
-  Globe,
-MapPin,
-Send,
-PhoneCall,  Sparkles,
-  Wrench,
+  Mail,
+  MapPin,
+  Send,
+  PhoneCall,
+  Sparkles,
   X,
 } from 'lucide-react'
 import { Reveal } from './components/Reveal'
-import { faqs, navLinks, partners, services } from './data'
+import { faqs } from './data'
 import type { ContactFormErrors, ContactFormValues } from './types'
 import './App.css'
 
@@ -40,24 +32,8 @@ const initialFormValues: ContactFormValues = {
   message: '',
 }
 
-const serviceIcons: Record<string, typeof Wrench> = {
-  'Electromechanical Contracting': Cog,
-  'Industrial Equipment Supply': Factory,
-  'Architectural & Structural Engineering': Landmark,
-  'Global Import/Export Logistics': Globe2,
-}
 
-const aboutHighlights = [
-  'Advanced thermodynamic, fluid dynamic, and structural parameter verification.',
-  'Strategic multi-national supply chain orchestration and component alignment.',
-  'Rigorous execution metrics, automated milestone logging, and zero-defect handover.',
-]
 
-const deliveryStages = [
-  'System design, computational modeling, and specification verification',
-  'Strategic asset sourcing, localized custom engineering, and safety compliance',
-  'On-site deployment, rigorous load testing, instrumentation, and final commissioning',
-]
 
 // Specialized unique descriptions matching each capability idea
 const capabilityDetails: Record<string, string> = {
@@ -148,38 +124,6 @@ const portfolioProjects = [  {
 ]
 
 // Explicitly defined custom moving data array matching the detailed text found in the document photos
-const projectShowcase = [
-  {
-    title: 'Minilik Hospital',
-    image: '/Minilik Second.webp',
-    category: 'Healthcare'
-  },
-  {
-    title: 'Lideta Sub City',
-    image: '/Lidta Sub City (2B + G + 11).webp',
-    category: 'Government'
-  },
-  {
-    title: 'Urban Corridor',
-    image: '/Corridor projects Around Adiss Abeba light poles 4-6 meters & Garden light & others.jpg',
-    category: 'Infrastructure'
-  },
-  {
-    title: 'Alert Hospital',
-    image: '/alert.jpg',
-    category: 'Healthcare'
-  },
-  {
-    title: 'Cinema Complex',
-    image: '/cinema.jpg',
-    category: 'Commercial'
-  },
-  {
-    title: 'Wolega University',
-    image: '/welega.jpg',
-    category: 'Education'
-  }
-]
 const certifications = [
   {
     title: "Professional License",
@@ -262,13 +206,9 @@ const clientProjects = [
 ];
 function App() {
   
-  const [certModalOpen, setCertModalOpen] = useState(false)
-const [certImage, setCertImage] = useState<string | null>(null)
-const openCertificate = (img: string) => {
-  setCertImage(img)
-  setCertModalOpen(true)
-}
-  const [activeCapability, setActiveCapability] = useState<number | null>(0)
+  const [] = useState(false)
+const [] = useState<string | null>(null)
+  const [] = useState<number | null>(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeFaq, setActiveFaq] = useState(0)
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
@@ -279,16 +219,8 @@ const openCertificate = (img: string) => {
   const [selectedCapability, setSelectedCapability] = useState<string>('Electrical Material Supply')
 const [showAllProjects, setShowAllProjects] = useState(false)
 const [showContractPortfolio, setShowContractPortfolio] = useState(false)
-const [showProjectTable, setShowProjectTable] = useState(false)
+const [] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
-  const resolvedServices = useMemo(
-    () =>
-      services.map((service) => ({
-        ...service,
-        Icon: serviceIcons[service.title as keyof typeof serviceIcons] ?? Wrench,
-      })),
-    [],
-  )
   
 
   const validateForm = (values: ContactFormValues) => {
@@ -1292,7 +1224,7 @@ href: "https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
     icon: MapPin,
     href: "https://www.google.com/maps/search/?api=1&query=British+Embassy+Addis+Ababa+Comoros+Street"
   }
-].map((item, index) => (
+].map((item) => (
 
   item.type === "dropdown" ? (
     /* 🔥 DROPDOWN CARD (PHONE) */
