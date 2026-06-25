@@ -66,7 +66,7 @@ const portfolioProjects = [  {
     title: 'Lideta Sub City Administration Complex (2B + G + 11)',
     category: 'Heavy Electrical Installation',
     description: 'Large-scale structural electrical infrastructure layout and substation implementation for a landmark administrative complex. Primary engineering scope focused on the positioning, configuring, and testing of heavy power distribution Transformers alongside robust Air Circuit Breaker (ACB) control panels engineered to safely manage high-amperage feeds rated strictly above 1200A.',
-  image: '/Lidta Sub City (2B + G + 11).webp',
+image: '/Lidta Sub City (2B + G + 11).webp',
     metrics: ['2B + G + 11 Scale', 'ACB Control Panels', 'Feeds > 1200A']
   },
   {
