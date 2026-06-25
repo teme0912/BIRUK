@@ -31,6 +31,7 @@ export interface FaqItem {
 export interface ContactFormValues {
   fullName: string
   company: string
+  email: string
   phone: string
   projectType: string
   message: string

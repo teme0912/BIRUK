@@ -27,6 +27,7 @@ const projectTypes = [
 const initialFormValues: ContactFormValues = {
   fullName: '',
   company: '',
+  email: '',
   phone: '',
   projectType: '',
   message: '',
@@ -210,7 +211,7 @@ function App() {
 const [] = useState<string | null>(null)
   const [] = useState<number | null>(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeFaq, setActiveFaq] = useState(0)
+const [activeFaq, setActiveFaq] = useState<number | null>(null)
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [formStatus, setFormStatus] = useState<'idle' | 'success'>('idle')
@@ -228,7 +229,13 @@ const [selectedCredential, setSelectedCredential] = useState<string | null>(null
 
     if (!values.fullName.trim()) nextErrors.fullName = 'Please enter your full name.'
     if (!values.company.trim()) nextErrors.company = 'Please enter your company name.'
-
+if (!values.email.trim()) {
+  nextErrors.email = 'Please enter your email.'
+} else if (
+  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+) {
+  nextErrors.email = 'Please enter a valid email address.'
+}
    if (!values.phone.trim()) {
   nextErrors.phone = 'Please enter a phone number.'
 } else {
@@ -272,31 +279,16 @@ const [selectedCredential, setSelectedCredential] = useState<string | null>(null
 
   try {
 await emailjs.send(
-  'service_5c6w87q',
+  'service_ad2uwwc',
   'template_nixvmai',
   {
     full_name: formValues.fullName,
     company: formValues.company,
+    email: formValues.email,
+    reply_to: formValues.email,
     phone: formValues.phone,
-
     project_type: formValues.projectType,
-
-    // 🔥 NEW STRUCTURED MESSAGE (IMPORTANT)
-    message: `
-NEW PROJECT INQUIRY
-
-========================
-Name: ${formValues.fullName}
-Company: ${formValues.company}
-Phone: ${formValues.phone}
-Project Type: ${formValues.projectType}
-
-------------------------
-Project Idea / Message:
-${formValues.message}
-
-========================
-    `.trim()
+    message: formValues.message
   },
   '8hiFmTOP3G_j_5KYs'
 )
@@ -333,21 +325,46 @@ setTimeout(() => {
 
       <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#090d15]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-10">
-          <a href="#home" className="flex items-center gap-3">
-            <span className="logo-wrap">
-              <img src="/image.png" alt="Biruk logo" className="logo-img" />
-            </span>
-            <span className="brand-name text-sm font-semibold uppercase tracking-[0.28em]">Biruk</span>
-          </a>
+          <a href="#home" className="flex items-center gap-3 group">
+  
+  {/* LOGO */}
+  <span className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
+    <img
+      src="/image.png"
+      alt="Biruk logo"
+      className="h-10 w-10 object-contain transition duration-300 group-hover:scale-110"
+    />
+  </span>
 
-          <div className="hidden items-center gap-8 lg:flex">
-            {orderedNavLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm font-medium text-white/70 transition hover:text-white">
-                {link.label}
-              </a>
-            ))}
-          </div>
+  {/* NAME */}
+  <span className="text-xl font-black uppercase tracking-[0.35em] text-white transition duration-300 group-hover:text-[#0a84ff]">
+    Biruk
+  </span>
 
+</a>
+<div className="hidden items-center gap-2 lg:flex">
+  {orderedNavLinks.map((link) => (
+    <a
+      key={link.href}
+      href={link.href}
+      className="
+        relative px-4 py-2 rounded-full
+        text-sm font-medium text-white/60
+        transition-all duration-300 ease-out
+
+        hover:text-white
+        hover:bg-white/10
+        hover:backdrop-blur-md
+        hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]
+        hover:-translate-y-0.5
+
+        active:scale-95
+      "
+    >
+      {link.label}
+    </a>
+  ))}
+</div>
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href="#contact"
@@ -398,14 +415,13 @@ setTimeout(() => {
       <main className="main-with-fixed-header">
         {/* --- HOME SECTION --- */}
         <section id="home" className="home-hero px-5 pb-24 pt-20 sm:px-8 lg:px-10 lg:pt-32 relative overflow-hidden min-h-[85vh] flex items-center">
-          <div className="absolute inset-0 z-0">
-            <img 
-              src="/spencerwing-power-plant-2840909_1920.jpg" 
-              alt="Home Background" 
-              className="h-full w-full object-cover opacity-75 object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#090d15]/40 via-[#090d15]/60 to-[#090d15]" />
-          </div>
+         <div className="absolute inset-0 z-0">
+  <img
+    src="/spencerwing-power-plant-2840909_1920.jpg"
+    alt="Home Background"
+    className="h-full w-full object-cover object-center brightness-110 contrast-105"
+  />
+</div>
 
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="py-12 sm:py-16 lg:py-20">
@@ -415,11 +431,13 @@ setTimeout(() => {
                   Where expertise meets dedication
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">Biruk</h1>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">Engineering Excellence.</h1>
 
-                <p className="mt-3 max-w-xl text-lg leading-8 text-white/70">Engineering Excellence. Reliable Supply. Seamless Execution.
-We specialize in advanced building electrical installations, premium material supply, precision testing, and certified commissioning services. From heavy industrial infrastructure to commercial complexes, we deliver high-quality engineering systems designed for safe, reliable, and efficient operation.</p>
-
+                <p className="mt-3 max-w-xl text-lg leading-8 text-white/80">
+  We specialize in <span className="font-bold text-white">advanced building electrical installations</span>, 
+  <span className="font-bold text-white">premium material supply</span>, precision testing, and certified commissioning services. 
+  From heavy industrial infrastructure to commercial complexes, we deliver high-quality engineering systems designed for safe, reliable, and efficient operation.
+</p>
                 <div className="mt-8 hero-cta-wrap">
                   <a
                     href="#contact"
@@ -485,7 +503,6 @@ We specialize in advanced building electrical installations, premium material su
       Sister company of <span className="text-white font-semibold">
         Yilma General Electrical & Electromechanical Materials Supply & Fix
       </span>
-      under Bamacom Construction.
     </p>
 
     <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#7dd3fc]">
@@ -1075,7 +1092,7 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
                           <button
                             type="button"
                             className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left hover:bg-white/5 transition-colors"
-                            onClick={() => setActiveFaq(isOpen ? -1 : index)}
+                          onClick={() => setActiveFaq(isOpen ? null : index)}
                             aria-expanded={isOpen}
                           >
                             <span className="text-sm font-medium text-white/90 sm:text-base">{faq.question}</span>
@@ -1121,11 +1138,11 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
   Email Us
 </a>                   
 <a
-  href="tel:+251934414324"
+  href="tel:+251911045505"
   className="flex-1 text-center border border-[#0a84ff]/30 rounded-xl bg-[#0a84ff]/10 text-[#7dd3fc] px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#0a84ff] hover:text-white transition-all duration-300"
 >
   Call Representative
-</a>               
+</a>             
                   </div>
 
                   <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -1395,6 +1412,18 @@ href: "https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
     </div>
 
     {/* PHONE */}
+
+<FieldLabel text="Email" error={formErrors.email}>
+  <input
+    type="email"
+    autoComplete="email"
+    className={inputClassName(formErrors.email)}
+    value={formValues.email}
+    onChange={(e) => updateField('email', e.target.value)}
+    placeholder="john@company.com"
+  />
+</FieldLabel>
+
    <FieldLabel text="Phone" error={formErrors.phone}>
   <input
     type="tel"
