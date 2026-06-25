@@ -1,6 +1,7 @@
 import emailjs from '@emailjs/browser';
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useState, useRef, useEffect, type FormEvent, type ReactNode } from 'react'
 import { FaLinkedin } from 'react-icons/fa'
+import Swal from "sweetalert2";
 import {
   ArrowRight,
   Menu,
@@ -206,15 +207,48 @@ const clientProjects = [
   },
 ];
 function App() {
-  
-  const [] = useState(false)
+const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+const [] = useState(false)
 const [] = useState<string | null>(null)
   const [] = useState<number | null>(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 const [activeFaq, setActiveFaq] = useState<number | null>(null)
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}, [])
+useEffect(() => {
+  document.title = "Biruk Trading & Engineering | Electrical & Electromechanical Services"
+
+  const meta = document.querySelector("meta[name='description']")
+  if (meta) {
+    meta.setAttribute(
+      "content",
+      "Electrical installation, power distribution, electromechanical services and engineering solutions in Ethiopia."
+    )
+  }
+}, [])
+useEffect(() => {
+  const handleHashChange = () => {
+    const id = window.location.hash.replace('#', '')
+    if (id) {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
+  window.addEventListener('hashchange', handleHashChange)
+  return () => window.removeEventListener('hashchange', handleHashChange)
+}, [])
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [formStatus, setFormStatus] = useState<'idle' | 'success'>('idle')
+  const [loading, setLoading] = useState(false)
+  const [, setIsSending] = useState(false);
   
   // Interactive state tracking for the corporate capabilities panel
   const [selectedCapability, setSelectedCapability] = useState<string>('Electrical Material Supply')
@@ -269,43 +303,80 @@ if (!values.email.trim()) {
 
  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
   event.preventDefault()
-
+  setLoading(true)
+  setIsSending(true);
   const nextErrors = validateForm(formValues)
   setFormErrors(nextErrors)
 
   if (Object.keys(nextErrors).length > 0) {
+    setLoading(false)
     return
   }
 
   try {
-await emailjs.send(
-  'service_ad2uwwc',
-  'template_nixvmai',
+ await emailjs.send(
+  import.meta.env.VITE_EMAILJS_SERVICE,
+  import.meta.env.VITE_EMAILJS_TEMPLATE,
   {
     full_name: formValues.fullName,
     company: formValues.company,
     email: formValues.email,
-    reply_to: formValues.email,
+    reply_to: formValues.email,   // ✅ already there
     phone: formValues.phone,
     project_type: formValues.projectType,
-    message: formValues.message
+    message: formValues.message,
   },
-  '8hiFmTOP3G_j_5KYs'
-)
+  import.meta.env.VITE_EMAILJS_PUBLIC
+);
 
-   setFormStatus('success')
-setFormValues(initialFormValues)
+  // ✅ SUCCESS UI STATE
+  setFormStatus("success")
+  setLoading(false)
+  setIsSending(false)
 
-// auto hide success after 4 seconds
-setTimeout(() => {
-  setFormStatus('idle')
-}, 4000)
-  } catch (error) {
-  console.error('EmailJS Error:', error)
-  alert(JSON.stringify(error))
-}
-}
+  // optional scroll to contact
+  setTimeout(() => {
+    document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth",
+    })
+  }, 300)
 
+  // reset form
+  setFormValues(initialFormValues)
+
+  // auto reset success message
+  timeoutRef.current = setTimeout(() => {
+    setFormStatus("idle")
+  }, 5000)
+
+  // 🔥 NICE POPUP (like professional systems)
+  Swal.fire({
+    icon: "success",
+    title: "Message Sent Successfully",
+    text: "We will contact you within 24 hours.",
+    timer: 2000,
+    showConfirmButton: false,
+  })
+
+} catch (error) {
+  console.error("EmailJS Error:", error)
+
+  setLoading(false)
+
+  // ❌ ERROR UI
+  Swal.fire({
+    icon: "error",
+    title: "Message Failed",
+    text: "Please check your connection or try again later.",
+  })
+}}
+useEffect(() => {
+  return () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+  }
+}, [])
   // Pure strict explicit order matching requested layout
   const orderedNavLinks = [
     { href: '#home', label: 'Home' },
@@ -328,17 +399,28 @@ setTimeout(() => {
           <a href="#home" className="flex items-center gap-3 group">
   
   {/* LOGO */}
-  <span className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
+<span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 border border-[#0a84ff]/30 shadow-[0_0_30px_rgba(10,132,255,0.35)] overflow-hidden">
     <img
       src="/image.png"
       alt="Biruk logo"
-      className="h-10 w-10 object-contain transition duration-300 group-hover:scale-110"
-    />
+className="h-12 w-12 object-contain transition duration-300 group-hover:scale-110"    />
   </span>
 
   {/* NAME */}
-  <span className="text-xl font-black uppercase tracking-[0.35em] text-white transition duration-300 group-hover:text-[#0a84ff]">
-    Biruk
+<span className="
+text-2xl
+font-black
+uppercase
+tracking-[0.35em]
+bg-gradient-to-r
+from-[#0a84ff]
+via-[#7dd3fc]
+to-[#10b981]
+bg-clip-text
+text-transparent
+transition
+duration-300
+">    Biruk
   </span>
 
 </a>
@@ -379,7 +461,7 @@ setTimeout(() => {
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/85 transition hover:border-white/25 hover:bg-white/10 lg:hidden"
             onClick={() => setMobileMenuOpen((current) => !current)}
-            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navigation menu'}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -431,18 +513,56 @@ setTimeout(() => {
                   Where expertise meets dedication
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">Engineering Excellence.</h1>
+<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
+Engineering Excellence
+<br />
+<span className="text-[#7dd3fc]">
+For Critical Infrastructure
+</span>
+</h1><div className="mt-6 flex flex-wrap gap-3">
 
+  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+    Electrical Installation
+  </span>
+
+  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+    Power Distribution
+  </span>
+<span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+Electrical Material Supply  </span>
+  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+    Testing & Commissioning
+  </span>
+
+</div>
                 <p className="mt-3 max-w-xl text-lg leading-8 text-white/80">
   We specialize in <span className="font-bold text-white">advanced building electrical installations</span>, 
   <span className="font-bold text-white">premium material supply</span>, precision testing, and certified commissioning services. 
   From heavy industrial infrastructure to commercial complexes, we deliver high-quality engineering systems designed for safe, reliable, and efficient operation.
 </p>
+
                 <div className="mt-8 hero-cta-wrap">
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a84ff] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(10,132,255,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#0f94ff]"
-                  >
+className="
+inline-flex
+items-center
+justify-center
+gap-2
+rounded-full
+bg-[#0a84ff]
+px-7
+py-4
+text-sm
+font-semibold
+text-white
+shadow-[0_15px_40px_rgba(10,132,255,0.4)]
+transition-all
+duration-300
+hover:-translate-y-1
+hover:scale-105
+hover:bg-[#1593ff]
+"                  >
                     Contact Us
                     <PhoneCall className="h-4 w-4" />
                   </a>
@@ -771,8 +891,19 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
   : portfolioProjects.slice(0, 3)
 ).map((project, index) => (
                 <Reveal key={project.id} delay={index * 100}>
-                  <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d1527]/40 shadow-2xl backdrop-blur-md hover:border-white/20 transition-all duration-300 group">
-                    <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5 bg-white/5">
+<div className="
+group
+flex h-full flex-col
+overflow-hidden
+rounded-[2rem]
+border border-white/10
+bg-[#0d1527]/40
+backdrop-blur-xl
+transition-all duration-500
+hover:-translate-y-2
+hover:border-[#0a84ff]/40
+hover:shadow-[0_30px_80px_rgba(10,132,255,0.25)]
+">                    <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5 bg-white/5">
                       <img 
                         src={project.image} 
                         alt={project.title} 
@@ -1037,8 +1168,8 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
             </Reveal>
 
             <Reveal delay={80}>
-              <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] py-6 shadow-inner backdrop-blur-xl">
-               <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] py-6 shadow-inner backdrop-blur-xl">
+                             <div>
+<div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] py-6 shadow-inner backdrop-blur-xl">
 
   <div className="project-slider-wrapper">
 
@@ -1049,8 +1180,10 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
         <div key={index} className="project-slide">
 
           <img
-            src={project.image}
-            alt={project.title}
+             src={project.image}
+  alt={project.title}
+  loading="lazy"
+  decoding="async"
             className="project-slide-image"
           />
 
@@ -1089,12 +1222,13 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
                       const isOpen = activeFaq === index
                       return (
                         <div key={faq.question} className="rounded-2xl border border-white/5 bg-black/30 overflow-hidden transition-all duration-300">
-                          <button
-                            type="button"
-                            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left hover:bg-white/5 transition-colors"
-                          onClick={() => setActiveFaq(isOpen ? null : index)}
-                            aria-expanded={isOpen}
-                          >
+                         <button
+  type="button"
+  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left hover:bg-white/5 transition-colors"
+  onClick={() => setActiveFaq(isOpen ? null : index)}
+  aria-expanded={isOpen}
+  aria-controls={`faq-${index}`}
+>
                             <span className="text-sm font-medium text-white/90 sm:text-base">{faq.question}</span>
                             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60">
                               {isOpen ? '−' : '+'}
@@ -1103,8 +1237,11 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
                           <div
                             className={`grid transition-all duration-300 ease-out ${isOpen ? 'grid-rows-[1fr] pb-4 opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
                           >
-                            <div className="overflow-hidden px-5">
-                              <p className="text-sm leading-7 text-white/60 border-t border-white/5 pt-3">{faq.answer}</p>
+<div
+id={`faq-button-${index}`}
+  className="overflow-hidden px-5"
+>
+                                <p className="text-sm leading-7 text-white/60 border-t border-white/5 pt-3">{faq.answer}</p>
                             </div>
                           </div>
                         </div>
@@ -1182,10 +1319,7 @@ className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidd
 <div className="flex flex-col gap-6 h-full">
         {/* HEADQUARTERS */}
         <div className="rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-xl p-7">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#7dd3fc]/80">
-            Headquarters
-          </p>
-
+          
           <h3 className="mt-3 text-2xl font-semibold text-white">
              View Office Location
           </h3>
@@ -1462,17 +1596,26 @@ href: "https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
     </FieldLabel>
 
     {/* BUTTON */}
-    <button
-      type="submit"
-      className="w-full mt-auto rounded-xl bg-[#0a84ff] py-4 text-sm font-semibold text-white
-      shadow-[0_10px_30px_rgba(10,132,255,0.25)]
-      hover:shadow-[0_15px_40px_rgba(10,132,255,0.35)]
-      hover:-translate-y-0.5 transition"
-    >
-      Send Inquiry
-      <ArrowRight className="inline ml-2 h-4 w-4" />
-    </button>
-
+   <button
+  type="submit"
+  disabled={loading}
+  className="w-full mt-auto rounded-xl bg-[#0a84ff] py-4 text-sm font-semibold text-white
+  shadow-[0_10px_30px_rgba(10,132,255,0.25)]
+  hover:shadow-[0_15px_40px_rgba(10,132,255,0.35)]
+  hover:-translate-y-0.5 transition
+  disabled:opacity-60 disabled:cursor-not-allowed"
+>
+{loading ? (
+  <span className="flex items-center justify-center gap-2">
+    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+    Sending...
+  </span>
+) : (
+  <span>
+    Send Inquiry <ArrowRight className="inline ml-2 h-4 w-4" />
+  </span>
+)}
+</button>
   </form>
 </div>
     </div>
@@ -1502,7 +1645,7 @@ href: "https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
     </div>
   </div>
 )}
-      </main>
+ </main>
 
       {/* --- Footer Component --- */}
       <footer className="border-t border-white/10 bg-[#060a12] px-5 py-12 sm:px-8 lg:px-10">
