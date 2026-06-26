@@ -275,6 +275,12 @@ useEffect(() => {
 
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
+useEffect(() => {
+  document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
+  return () => {
+    document.body.style.overflow = ''
+  }
+}, [mobileMenuOpen])
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [formStatus, setFormStatus] = useState<'idle' | 'success'>('idle')
@@ -433,23 +439,23 @@ useEffect(() => {
       </div>
 
       <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#090d15]/90 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-10">
-          <a href="#home" className="flex items-center gap-3 group">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4 lg:px-10">
+          <a href="#home" className="flex min-w-0 items-center gap-2 sm:gap-3 group">
   
   {/* LOGO */}
-<span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 border border-[#0a84ff]/30 shadow-[0_0_30px_rgba(10,132,255,0.35)] overflow-hidden">
+<span className="relative flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 border border-[#0a84ff]/30 shadow-[0_0_30px_rgba(10,132,255,0.35)] overflow-hidden">
     <img
       src="/image.png"
       alt="Biruk logo"
-className="h-12 w-12 object-contain transition duration-300 group-hover:scale-110"    />
+className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-hover:scale-110"    />
   </span>
 
   {/* NAME */}
 <span className="
-text-2xl
+text-lg sm:text-2xl
 font-black
 uppercase
-tracking-[0.35em]
+tracking-[0.2em] sm:tracking-[0.35em]
 bg-gradient-to-r
 from-[#0a84ff]
 via-[#7dd3fc]
@@ -458,6 +464,7 @@ bg-clip-text
 text-transparent
 transition
 duration-300
+truncate
 ">    Biruk
   </span>
 
@@ -554,7 +561,7 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
 
       <main className="main-with-fixed-header">
         {/* --- HOME SECTION --- */}
-        <section id="home" className="home-hero px-5 pb-24 pt-20 sm:px-8 lg:px-10 lg:pt-32 relative overflow-hidden min-h-[85vh] flex items-center">
+        <section id="home" className="home-hero px-4 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10 lg:pt-32 relative overflow-hidden min-h-[80vh] sm:min-h-[85vh] flex items-center">
          <div className="absolute inset-0 z-0">
   <img
     src="/spencerwing-power-plant-2840909_1920.jpg"
@@ -566,12 +573,12 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="py-12 sm:py-16 lg:py-20">
               <div className="max-w-4xl hero-content">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white mb-6">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-white mb-4 sm:mb-6">
   <Sparkles className="h-4 w-4" />
   Where expertise meets dedication
 </div>
 
-<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
+<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
 Engineering Excellence
 <br />
 <span className="text-[#7dd3fc]">
@@ -597,7 +604,7 @@ For Critical Infrastructure
   </span>
 
 </div>
-               <p className="mt-3 max-w-xl text-lg leading-8 text-white">
+               <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white">
   We specialize in{' '}
   <span className="font-black text-[#7dd3fc]">advanced building electrical installations</span>,{' '}
   <span className="font-black text-[#7dd3fc]">premium material supply</span>,{' '}
@@ -642,7 +649,7 @@ hover:bg-[#1593ff]
 
         {/* --- ABOUT SECTION --- */}
         {/* --- ABOUT SECTION --- */}
-<section id="about" className="px-5 py-24 sm:px-8 lg:px-10 relative overflow-hidden">
+<section id="about" className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 relative overflow-hidden">
 
   {/* BACKGROUND GLOW */}
   <div className="pointer-events-none absolute inset-0 -z-10">
@@ -892,7 +899,7 @@ hover:bg-[#1593ff]
           {certifications.map((item) => (
             <div
               key={item.title}
-              className="min-w-[260px] sm:min-w-[300px] flex-shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] hover:border-[#0a84ff]/30 transition duration-300"
+              className="min-w-[220px] sm:min-w-[260px] md:min-w-[300px] flex-shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] hover:border-[#0a84ff]/30 transition duration-300"
             >
               <img
                 src={item.file}
@@ -929,7 +936,7 @@ hover:bg-[#1593ff]
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {[
             { value: '8+', label: 'Years of Experience', color: 'text-[#0a84ff]', glow: 'rgba(10,132,255,0.3)' },
             { value: '50+', label: 'Engineers & Technicians', color: 'text-[#0a84ff]', glow: 'rgba(10,132,255,0.3)' },
@@ -938,9 +945,9 @@ hover:bg-[#1593ff]
           ].map((stat) => (
             <div
               key={stat.label}
-              className="rounded-2xl border border-white/10 bg-black/30 p-6 text-center hover:border-white/20 transition duration-300"
+              className="rounded-2xl border border-white/10 bg-black/30 p-4 sm:p-6 text-center hover:border-white/20 transition duration-300"
             >
-              <p className={`text-4xl font-black ${stat.color}`}>{stat.value}</p>
+              <p className={`text-2xl sm:text-4xl font-black ${stat.color}`}>{stat.value}</p>
               <p className="mt-2 text-xs text-white/50 leading-5">{stat.label}</p>
             </div>
           ))}
@@ -963,7 +970,7 @@ hover:bg-[#1593ff]
 
         {/* --- PORTFOLIO SECTION --- */}
      {/* --- PORTFOLIO SECTION --- */}
-<section id="portfolio" className="px-5 py-24 sm:px-8 lg:px-10 border-t border-white/5 relative overflow-hidden">
+<section id="portfolio" className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 border-t border-white/5 relative overflow-hidden">
 
   {/* BACKGROUND GLOW */}
   <div className="pointer-events-none absolute inset-0 -z-10">
@@ -992,7 +999,7 @@ hover:bg-[#1593ff]
         </div>
 
         {/* PROJECT COUNT BADGE */}
-        <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-4 text-center">
+        <div className="shrink-0 w-full sm:w-auto rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-4 text-center">
           <p className="text-3xl font-black text-[#0a84ff]">{portfolioProjects.length}+</p>
           <p className="text-xs text-white/40 mt-1">Projects Shown</p>
         </div>
@@ -1071,7 +1078,7 @@ hover:bg-[#1593ff]
           if (!nextState) setShowContractPortfolio(false)
           document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }}
-        className="group inline-flex items-center gap-3 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-8 py-4 text-sm font-bold text-white shadow-[0_15px_40px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(10,132,255,0.45)]"
+        className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white shadow-[0_15px_40px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(10,132,255,0.45)]"
       >
         {showAllProjects ? 'Show Featured Only' : 'Explore Full Portfolio'}
         <ArrowRight className={`h-4 w-4 transition-all duration-300 ${showAllProjects ? 'rotate-180' : 'group-hover:translate-x-1'}`} />
@@ -1094,7 +1101,7 @@ hover:bg-[#1593ff]
       <Reveal>
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
 
-          <div className="px-8 py-6 border-b border-white/10">
+          <div className="px-4 sm:px-8 py-5 sm:py-6 border-b border-white/10">
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
               Financial Overview
             </p>
@@ -1104,25 +1111,25 @@ hover:bg-[#1593ff]
             </p>
           </div>
 
-          <div className="w-full overflow-x-auto">
-            <table className="w-full text-left text-sm">
+          <div className="responsive-table-wrap w-full">
+            <table className="responsive-table w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-white/10 bg-white/[0.02]">
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">#</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Project</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Client</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Contract Value</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">#</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Project</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Client</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Contract Value</th>
                 </tr>
               </thead>
               <tbody>
                 {clientProjects.map((item, i) => (
                   <tr key={i} className="border-b border-white/5 hover:bg-white/[0.03] transition duration-200">
-                    <td className="px-6 py-4 text-xs font-bold text-white/20">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs font-bold text-white/20">
                       {String(i + 1).padStart(2, '0')}
                     </td>
-                    <td className="px-6 py-4 text-sm text-white/70">{item.project}</td>
-                    <td className="px-6 py-4 text-sm text-white/50">{item.client}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-white/70">{item.project}</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-white/50">{item.client}</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <span className="rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1 text-xs font-bold text-[#7dd3fc]">
                         ETB {item.totalAmount.toLocaleString()}
                       </span>
@@ -1134,7 +1141,7 @@ hover:bg-[#1593ff]
           </div>
 
           {/* TOTAL */}
-          <div className="px-8 py-5 border-t border-white/10 flex items-center justify-between">
+          <div className="px-4 sm:px-8 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <p className="text-sm text-white/40">Total Contract Value</p>
             <span className="rounded-xl border border-[#10b981]/30 bg-[#10b981]/10 px-4 py-2 text-sm font-black text-[#10b981]">
               ETB {clientProjects.reduce((sum, item) => sum + item.totalAmount, 0).toLocaleString()}
@@ -1151,7 +1158,7 @@ hover:bg-[#1593ff]
         {/* --- SERVICES SECTION --- */}
 <section
   id="services"
-  className="px-5 py-24 sm:px-8 lg:px-10 border-t border-white/5 bg-[#070b12]"
+  className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 border-t border-white/5 bg-[#070b12]"
 >
   <div className="mx-auto max-w-7xl">
 
@@ -1239,7 +1246,7 @@ hover:bg-[#1593ff]
 </section>
 
         {/* --- TRUST SECTION / HORIZONTAL TICKER --- */}
-        <section id="trust" className="px-5 py-10 sm:px-8 lg:px-10 bg-black/[0.1]">
+        <section id="trust" className="px-4 py-10 sm:px-8 lg:px-10 bg-black/[0.1]">
         
           <div className="mx-auto max-w-7xl">
             <Reveal>
@@ -1386,7 +1393,7 @@ id={`faq-button-${index}`}
  
 <section
   id="contact"
-  className="px-5 py-24 sm:px-8 lg:px-10 border-t border-white/5 bg-gradient-to-b from-[#070b12] to-[#05070c]"
+  className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 border-t border-white/5 bg-gradient-to-b from-[#070b12] to-[#05070c]"
 >
   <div className="mx-auto max-w-7xl">
 
@@ -1404,9 +1411,9 @@ id={`faq-button-${index}`}
   {/* SMALL STATUS CARD */}
   <div className="rounded-3xl border border-[#0a84ff]/20 bg-gradient-to-br from-[#0b1220] to-[#101827] p-6">
 
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-      <div>
+      <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.3em] text-[#7dd3fc]">
           Office
         </p>
@@ -1421,8 +1428,8 @@ id={`faq-button-${index}`}
         </p>
       </div>
 
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0a84ff]/15">
-        <MapPin className="h-7 w-7 text-[#7dd3fc]" />
+      <div className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-[#0a84ff]/15">
+        <MapPin className="h-6 w-6 sm:h-7 sm:w-7 text-[#7dd3fc]" />
       </div>
 
     </div>
@@ -1745,17 +1752,17 @@ id={`faq-button-${index}`}
 </section>
 {selectedCredential && (
   <div
-    className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-5"
+    className="credential-modal fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-4 sm:p-5"
     onClick={() => setSelectedCredential(null)}
   >
     <div
-      className="max-w-5xl"
+      className="w-full max-w-5xl"
       onClick={(e) => e.stopPropagation()}
     >
       <img
         src={selectedCredential}
         alt="Document"
-        className="max-h-[90vh] rounded-2xl"
+        className="rounded-2xl"
       />
 
       <button
@@ -1769,24 +1776,25 @@ id={`faq-button-${index}`}
 )}
 <button
   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-[#0a84ff] shadow-[0_8px_30px_rgba(10,132,255,0.4)] flex items-center justify-center hover:scale-110 transition"
+  aria-label="Scroll to top"
+  className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-[#0a84ff] shadow-[0_8px_30px_rgba(10,132,255,0.4)] flex items-center justify-center hover:scale-110 transition"
 >
   <ArrowRight className="h-5 w-5 rotate-[-90deg] text-white" />
 </button>
  </main>
 
       {/* --- Footer Component --- */}
-      <footer className="border-t border-white/10 bg-[#060a12] px-5 py-12 sm:px-8 lg:px-10">
+      <footer className="border-t border-white/10 bg-[#060a12] px-4 py-10 sm:px-8 sm:py-12 lg:px-10">
 <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">          
-          <div className="flex flex-col gap-2 order-2 sm:order-1">
+          <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-3">
 
-  <h2 className="text-4xl font-black uppercase tracking-[0.25em] bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981] bg-clip-text text-transparent">
+  <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981] bg-clip-text text-transparent">
     BIRUK
-    <p className="text-sm font-medium tracking-[0.2em] uppercase text-[#7dd3fc]/80">
-  Founder & Managing Director
-</p>
   </h2>
+  <p className="text-xs sm:text-sm font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[#7dd3fc]/80">
+    Founder & Managing Director
+  </p>
 
   <div className="flex items-center gap-2">
     <div className="h-[2px] w-16 rounded-full bg-gradient-to-r from-[#0a84ff] to-[#10b981]" />
@@ -1824,7 +1832,7 @@ function SectionHeading({ eyebrow, title, description, primaryId }: SectionHeadi
   return (
     <div className="max-w-4xl" id={primaryId}>
       <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+      <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
         {title}
       </h2>
       <p className="mt-4 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">{description}</p>
@@ -1851,7 +1859,7 @@ function FieldLabel({ text, error, className = '', children }: FieldLabelProps) 
 
 function inputClassName(error?: string) {
   const baseClassName =
-'w-full rounded-xl border bg-[#0b1220]/60 px-3.5 py-3 text-sm text-white placeholder:text-white/20 outline-none transition duration-300 focus:-translate-y-0.5 focus:border-[#0a84ff]/50 focus:bg-[#0b1220] focus:shadow-[0_0_0_4px_rgba(10,132,255,0.12)]'
+'w-full rounded-xl border bg-[#0b1220]/60 px-3.5 py-3 text-base sm:text-sm text-white placeholder:text-white/20 outline-none transition duration-300 focus:-translate-y-0.5 focus:border-[#0a84ff]/50 focus:bg-[#0b1220] focus:shadow-[0_0_0_4px_rgba(10,132,255,0.12)]'
   return error ? `${baseClassName} border-[#ef4444]/40` : `${baseClassName} border-white/5 hover:border-white/20`
 }
 

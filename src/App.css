@@ -100,14 +100,23 @@
 }
 
 /* Fixed header helper and main spacing */
-.site-header { height: 64px; }
-.main-with-fixed-header { padding-top: 64px; }
+.site-header {
+	min-height: 64px;
+	height: auto;
+}
 
-/* Hero illustration */
-.hero-illustration { filter: drop-shadow(0 30px 60px rgba(10,132,255,0.06)); max-width: 420px; opacity: 0.98; }
+.main-with-fixed-header {
+	padding-top: 64px;
+}
+
 @media (min-width: 1280px) {
-	.site-header { height: 72px; }
-	.main-with-fixed-header { padding-top: 72px; }
+	.site-header {
+		min-height: 72px;
+	}
+
+	.main-with-fixed-header {
+		padding-top: 72px;
+	}
 }
 
 /* Hero background using provided image */
@@ -153,8 +162,9 @@
 
 .project-slide {
   position: relative;
-  width: 420px;
-  height: 260px;
+  width: min(420px, 85vw);
+  height: auto;
+  aspect-ratio: 16 / 10;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 24px;
@@ -164,6 +174,31 @@
   box-shadow:
     0 20px 40px rgba(0,0,0,.25),
     0 0 20px rgba(10,132,255,.08);
+}
+
+@media (max-width: 640px) {
+  .project-slider-track {
+    gap: 16px;
+  }
+
+  .project-slide {
+    width: min(320px, 82vw);
+    border-radius: 18px;
+  }
+
+  .project-slide-overlay {
+    padding: 16px;
+  }
+
+  .project-slide-title {
+    font-size: 16px;
+  }
+
+  .project-slide-category {
+    font-size: 10px;
+    padding: 4px 10px;
+    margin-bottom: 8px;
+  }
 }
 
 .project-slide:hover {
@@ -240,4 +275,21 @@ body {
 /* Better mobile tap feel */
 button, a {
   touch-action: manipulation;
+}
+
+/* Responsive data table */
+.responsive-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.responsive-table {
+  min-width: 640px;
+}
+
+/* Credential lightbox */
+.credential-modal img {
+  width: 100%;
+  max-height: min(90vh, 900px);
+  object-fit: contain;
 }
