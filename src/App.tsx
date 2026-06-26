@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import {
   ArrowRight,
   Menu,
-  Mail,
   MapPin,
+  ChevronRight,
   Send,
   PhoneCall,
   Sparkles,
@@ -18,13 +18,18 @@ import type { ContactFormErrors, ContactFormValues } from './types'
 import './App.css'
 
 const projectTypes = [
-  'Electromechanical Contracting',
   'Industrial Equipment Supply',
   'Architectural & Structural Engineering',
-  'Global Import / Export Logistics',
+  'Global Import Logistics',
   'Integrated Project Support',
- ] as const
-
+  'Site Survey & Feasibility Assessment',
+  'Electrical Load Calculation & Design',
+  'Material Specification & Procurement',
+  'Advance Payment & Contract Agreement',
+  'Testing, Commissioning & Handover',
+  'Maintenance & After-Sales Support',
+  'Consensus & Technical Consultation',
+] as const
 const initialFormValues: ContactFormValues = {
   fullName: '',
   company: '',
@@ -207,10 +212,8 @@ const clientProjects = [
   },
 ];
 function App() {
-const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-const [] = useState(false)
-const [] = useState<string | null>(null)
-  const [] = useState<number | null>(0)
+  const [activeSection, setActiveSection] = useState("home");
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 const [activeFaq, setActiveFaq] = useState<number | null>(null)
 useEffect(() => {
@@ -244,6 +247,34 @@ useEffect(() => {
   window.addEventListener('hashchange', handleHashChange)
   return () => window.removeEventListener('hashchange', handleHashChange)
 }, [])
+useEffect(() => {
+  const handleScroll = () => {
+    const sections = document.querySelectorAll("section[id]");
+
+    let current = "home";
+
+    sections.forEach((section) => {
+      const sectionTop = (section as HTMLElement).offsetTop - 120;
+      const sectionHeight = (section as HTMLElement).offsetHeight;
+
+      if (
+        window.scrollY >= sectionTop &&
+        window.scrollY < sectionTop + sectionHeight
+      ) {
+        current = section.id;
+      }
+    });
+
+    setActiveSection(current);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  // Set the correct section on page load
+  handleScroll();
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [formStatus, setFormStatus] = useState<'idle' | 'success'>('idle')
@@ -251,10 +282,9 @@ useEffect(() => {
   const [, setIsSending] = useState(false);
   
   // Interactive state tracking for the corporate capabilities panel
-  const [selectedCapability, setSelectedCapability] = useState<string>('Electrical Material Supply')
+const [selectedCapability, setSelectedCapability] = useState<string | null>(null)  
 const [showAllProjects, setShowAllProjects] = useState(false)
 const [showContractPortfolio, setShowContractPortfolio] = useState(false)
-const [] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
   
 
@@ -314,21 +344,29 @@ if (!values.email.trim()) {
   }
 
   try {
- await emailjs.send(
+    console.log("Sending with:", {
+  service: import.meta.env.VITE_EMAILJS_SERVICE,
+  template: import.meta.env.VITE_EMAILJS_TEMPLATE,
+  public: import.meta.env.VITE_EMAILJS_PUBLIC,
+  data: {
+    full_name: formValues.fullName,
+    email: formValues.email,
+    phone: formValues.phone,
+  }
+})
+await emailjs.send(
   import.meta.env.VITE_EMAILJS_SERVICE,
   import.meta.env.VITE_EMAILJS_TEMPLATE,
   {
     full_name: formValues.fullName,
     company: formValues.company,
     email: formValues.email,
-    reply_to: formValues.email,   // ✅ already there
     phone: formValues.phone,
     project_type: formValues.projectType,
     message: formValues.message,
   },
   import.meta.env.VITE_EMAILJS_PUBLIC
 );
-
   // ✅ SUCCESS UI STATE
   setFormStatus("success")
   setLoading(false)
@@ -425,33 +463,53 @@ duration-300
 
 </a>
 <div className="hidden items-center gap-2 lg:flex">
-  {orderedNavLinks.map((link) => (
+{orderedNavLinks.map((link) => {
+  const isActive = activeSection === link.href.replace("#", "");
+
+  return (
     <a
       key={link.href}
       href={link.href}
-      className="
+      className={`
         relative px-4 py-2 rounded-full
-        text-sm font-medium text-white/60
-        transition-all duration-300 ease-out
+        text-sm font-semibold transition-all duration-300
 
-        hover:text-white
-        hover:bg-white/10
-        hover:backdrop-blur-md
-        hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]
-        hover:-translate-y-0.5
-
-        active:scale-95
-      "
+        ${
+          isActive
+            ? "bg-[#0a84ff]/20 text-[#0a84ff] shadow-[0_0_20px_rgba(10,132,255,0.35)]"
+            : "text-white/60 hover:text-[#0a84ff] hover:bg-white/10"
+        }
+      `}
     >
       {link.label}
     </a>
-  ))}
+  );
+})}
 </div>
+          
+          
           <div className="hidden items-center gap-3 lg:flex">
             <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-5 py-3 text-sm font-semibold text-white shadow-[0_15px_35px_rgba(10,132,255,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#0f94ff]"
-            >
+                    href="#contact"
+className="
+inline-flex
+items-center
+justify-center
+gap-2
+rounded-full
+bg-[#0a84ff]
+px-7
+py-4
+text-sm
+font-semibold
+text-white
+shadow-[0_15px_40px_rgba(10,132,255,0.4)]
+transition-all
+duration-300
+hover:-translate-y-1
+hover:scale-105
+hover:bg-[#1593ff]
+"                  >
               Request Quote
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -508,10 +566,10 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="py-12 sm:py-16 lg:py-20">
               <div className="max-w-4xl hero-content">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-[#7dd3fc] mb-6">
-                  <Sparkles className="h-4 w-4" />
-                  Where expertise meets dedication
-                </div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white mb-6">
+  <Sparkles className="h-4 w-4" />
+  Where expertise meets dedication
+</div>
 
 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
 Engineering Excellence
@@ -521,24 +579,34 @@ For Critical Infrastructure
 </span>
 </h1><div className="mt-6 flex flex-wrap gap-3">
 
-  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+<span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
     Electrical Installation
   </span>
 
-  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
-    Power Distribution
+<span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+ Power Distribution
   </span>
-<span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
-Electrical Material Supply  </span>
-  <span className="rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2 text-xs font-semibold text-[#7dd3fc]">
+
+  <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+
+    Electrical Material Supply
+  </span>
+
+<span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
     Testing & Commissioning
   </span>
 
 </div>
-                <p className="mt-3 max-w-xl text-lg leading-8 text-white/80">
-  We specialize in <span className="font-bold text-white">advanced building electrical installations</span>, 
-  <span className="font-bold text-white">premium material supply</span>, precision testing, and certified commissioning services. 
-  From heavy industrial infrastructure to commercial complexes, we deliver high-quality engineering systems designed for safe, reliable, and efficient operation.
+               <p className="mt-3 max-w-xl text-lg leading-8 text-white">
+  We specialize in{' '}
+  <span className="font-black text-[#7dd3fc]">advanced building electrical installations</span>,{' '}
+  <span className="font-black text-[#7dd3fc]">premium material supply</span>,{' '}
+  <span className="font-black text-[#7dd3fc]">precision testing</span>, and{' '}
+  <span className="font-black text-[#7dd3fc]">certified commissioning services</span>.{' '}
+  From heavy industrial infrastructure to commercial complexes, we deliver{' '}
+  <span className="font-black text-[#0a84ff]">high-quality engineering systems</span>{' '}
+  designed for{' '}
+  <span className="font-black text-[#10b981]">safe, reliable, and efficient operation</span>.
 </p>
 
                 <div className="mt-8 hero-cta-wrap">
@@ -573,499 +641,514 @@ hover:bg-[#1593ff]
         </section>
 
         {/* --- ABOUT SECTION --- */}
-        <section id="about" className="px-5 py-20 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-7xl">
-            <Reveal>
-              <SectionHeading
-                eyebrow=""
-                title="About"
-                description="We operate with a structured engineering approach aligned with the requirements of institutional investors, industrial procurement teams, and large-scale infrastructure developers, ensuring reliability, compliance, and execution excellence across all projects."
-              />
-              
-            </Reveal>
+        {/* --- ABOUT SECTION --- */}
+<section id="about" className="px-5 py-24 sm:px-8 lg:px-10 relative overflow-hidden">
 
-<div className="mt-12 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-6 lg:gap-12">
-                <Reveal>
-                {/* --- MODERN ABOUT CORE SECTION --- */}
-<div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl">
-
-  {/* HEADER */}
-  <div className="flex items-start justify-between border-b border-white/10 pb-5">
-    <div>
-      <p className="text-xs uppercase tracking-[0.35em] text-[#7dd3fc]/80">
-        Company Overview
-      </p>
-
-      <h3 className="mt-2 text-2xl font-semibold text-white">
-        Engineering Execution & Power Systems Focus
-      </h3>
-    </div>
-
-    <div className="rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1 text-xs font-semibold text-[#7dd3fc]">
-      Active
-    </div>
+  {/* BACKGROUND GLOW */}
+  <div className="pointer-events-none absolute inset-0 -z-10">
+    <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[#0a84ff]/5 blur-3xl" />
   </div>
 
-  {/* SIMPLE DESCRIPTION */}
-  <p className="mt-6 text-sm leading-7 text-white/70">
-    Biruk Trading & Engineering focuses on electrical power systems, building wiring,
-    and material supply for construction and infrastructure projects. We ensure
-    safe power distribution, structured installation, and compliance with building standards.
-  </p>
+  <div className="mx-auto max-w-7xl">
 
-  {/* AFFILIATION */}
-  <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5">
-    <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-      Corporate Affiliation
-    </p>
-
-    <p className="mt-3 text-sm text-white/70 leading-6">
-      Sister company of <span className="text-white font-semibold">
-        Yilma General Electrical & Electromechanical Materials Supply & Fix
-      </span>
-    </p>
-
-    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#7dd3fc]">
-      Grade “ሀ” Taxpayer Company
-    </div>
-  </div>
-
-  {/* CORE STRENGTHS (CLEAN LIST) */}
-  <div className="mt-6">
-    <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-      Core Strengths
-    </p>
-
-    <div className="mt-4 grid gap-3 sm:grid-cols-2 text-sm text-white/70">
-      <div className="flex items-start gap-2">
-        <span className="text-[#0a84ff]">•</span>
-        Electrical power distribution systems
+    {/* HEADER */}
+    <Reveal>
+      <div className="flex flex-col gap-2 mb-16">
+        <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
+          Who We Are
+        </span>
+        <h2 className="text-4xl sm:text-5xl font-black text-white">
+          About <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">Biruk Trading</span>
+        </h2>
+        <p className="mt-2 max-w-2xl text-base text-white/50 leading-7">
+          A certified Grade "ሀ" electrical engineering company delivering safe,
+          reliable, and code-compliant power systems across Ethiopia since 2016.
+        </p>
       </div>
+    </Reveal>
 
-      <div className="flex items-start gap-2">
-        <span className="text-[#0a84ff]">•</span>
-        Building electrical wiring installation
-      </div>
+    {/* ROW 1 — MISSION + TRUSTED BY */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
-      <div className="flex items-start gap-2">
-        <span className="text-[#0a84ff]">•</span>
-        Electrical material supply for projects
-      </div>
-
-      <div className="flex items-start gap-2">
-        <span className="text-[#0a84ff]">•</span>
-        System testing & commissioning support
-      </div>
-    </div>
-  </div>
-
-  {/* WORK FLOW (SIMPLIFIED) */}
-  <div className="mt-8">
-    <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-      Project Flow
-    </p>
-
-    <div className="mt-4 space-y-3">
-
-      {[
-        "Design & electrical planning for building systems",
-        "Material supply and site preparation",
-        "Electrical installation and wiring execution",
-        "Testing, verification, and final handover"
-      ].map((step, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
-        >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0a84ff]/20 text-xs font-bold text-[#7dd3fc]">
-            {i + 1}
-          </span>
-          <span className="text-sm text-white/70">{step}</span>
-        </div>
-      ))}
-
-    </div>
-  </div>
-
-</div>
-              </Reveal>
-
-              <Reveal delay={80}>
-<div className="grid gap-6 self-start">                  
-<div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(10,132,255,0.08),rgba(255,255,255,0.02),rgba(16,185,129,0.04))] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:p-8">
-
-  {/* HEADER */}
-  <div className="flex items-center justify-between border-b border-white/10 pb-4">
-    <div>
-      <p className="text-xs uppercase tracking-[0.32em] text-white/45">
-        Core Frameworks
-      </p>
-
-      <h3 className="mt-1 text-xl font-semibold text-white">
-        Cross-functional industrial capability
-      </h3>
-    </div>
-
-    <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-wider text-[#7dd3fc]">
-      Active
-    </div>
-  </div>
-
-  {/* GRID + DETAILS (SAME PANEL) */}
-  <div className="mt-6 space-y-3">
-
-    {[
-      'Electrical Material Supply',
-      'Control Panels & Protection Systems',
-      'Electromechanical Services',
-      'Testing & Commissioning'
-    ].map((item) => {
-      const isSelected = selectedCapability === item;
-
-      return (
-        <button
-          key={item}
-          onClick={() => setSelectedCapability(item)}
-          className={`w-full text-left rounded-xl border px-4 py-4 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
-            isSelected
-              ? 'border-[#0a84ff] bg-[#0a84ff]/15 text-white'
-              : 'border-white/5 bg-black/40 text-white/60 hover:border-white/20'
-          }`}
-        >
-          {item}
-        </button>
-      );
-    })}
-
-  </div>
-
-  {/* DETAILS INSIDE SAME BOX */}
-  <div className="mt-6 border-t border-white/10 pt-5">
-    <p className="text-[10px] uppercase tracking-[0.35em] text-[#7dd3fc]/70">
-      Technical Parameters — {selectedCapability}
-    </p>
-
-    <p className="mt-3 text-sm leading-7 text-white/70">
-      {capabilityDetails[selectedCapability]}
-    </p>
-  </div>
-
-</div>
-                </div>
-              </Reveal>
+      {/* MISSION */}
+      <Reveal>
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0a84ff]/8 via-white/[0.02] to-transparent p-8 backdrop-blur-xl">
+       
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-2xl bg-[#0a84ff]/20 border border-[#0a84ff]/30 flex items-center justify-center text-lg">
+              ⚡
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#0a84ff]">Mission</p>
+              <h3 className="text-xl font-bold text-white">Engineering Execution & Power Systems</h3>
             </div>
           </div>
-          {/* CERTIFICATIONS & CREDENTIALS */}
 
-<section className="px-5 py-20 sm:px-8 lg:px-10">
-  <div className="mx-auto max-w-7xl">
+          <p className="text-sm leading-7 text-white/60">
+            Biruk Trading & Engineering delivers professional electrical power systems,
+            building wiring, and material supply for construction and infrastructure
+            projects across Ethiopia. We ensure safe power distribution, structured
+            installation, and full compliance with international building standards.
+          </p>
 
-    <div className="text-center">
-      <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
-        Certifications & Credentials
-      </p>
+          {/* AFFILIATION */}
+          <div className="mt-6 rounded-2xl border border-white/5 bg-black/30 p-5">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-2">
+              Corporate Affiliation
+            </p>
+            <p className="text-sm text-white/70 leading-6">
+              Sister company of{' '}
+              <span className="font-bold text-white">
+                Yilma General Electrical & Electromechanical Materials Supply & Fix
+              </span>
+            </p>
+            <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-1.5 text-xs font-bold text-[#7dd3fc]">
+              ✓ Grade "ሀ" Taxpayer Company
+            </div>
+          </div>
+        </div>
+      </Reveal>
 
-      <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-        Verified Company Documents
-      </h2>
+      {/* STATS — 1 col */}
+    {/* TRUSTED BY */}
+      <Reveal delay={80}>
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff] mb-4">
+            Trusted By
+          </p>
+          <div className="space-y-3">
+            {[
+              { icon: '🏥', label: 'Healthcare Institutions' },
+              { icon: '🏛️', label: 'Government Projects' },
+              { icon: '🎓', label: 'Universities & Campuses' },
+              { icon: '🏗️', label: 'Industrial Infrastructure' },
+  { icon: '🏢', label: 'Commercial Complexes and 🏘️Residential Developments'},
+ 
 
-      <p className="mt-4 max-w-2xl mx-auto text-white/60">
-        Official business registrations, licenses and credentials demonstrating
-        our operational compliance and engineering capabilities.
-      </p>
+             
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 rounded-xl border border-white/5 bg-black/20 px-4 py-3 hover:border-[#0a84ff]/20 transition duration-300"
+              >
+                <span className="text-base">{item.icon}</span>
+                <span className="text-sm text-white/60">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
     </div>
 
-<div className="mt-12 flex gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory">
-        {certifications.map((item) => (
+    {/* ROW 2 — STRENGTHS + FLOW + CAPABILITIES */}
+    <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-        <div
-  key={item.title}
-className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]"
->
-          <img
-            src={item.file}
-            alt={item.title}
-            className="h-64 w-full object-cover"
-          />
+      {/* CORE STRENGTHS */}
+      <Reveal>
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff] mb-4">
+            Core Strengths
+          </p>
+          <div className="space-y-3">
+            {[
+              { icon: '⚡', title: 'Power Distribution', desc: 'Safe electrical networks for buildings.' },
+              { icon: '🔌', title: 'Building Wiring', desc: 'International safety code compliant.' },
+              { icon: '📦', title: 'Material Supply', desc: 'Certified cables, panels, breakers.' },
+              { icon: '🧪', title: 'Testing & Commissioning', desc: 'Full verification and documentation.' },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="flex items-start gap-3 rounded-xl border border-white/5 bg-black/20 px-4 py-3 hover:border-[#0a84ff]/20 transition duration-300"
+              >
+                <span className="text-base mt-0.5">{item.icon}</span>
+                <div>
+                  <p className="text-sm font-semibold text-white">{item.title}</p>
+                  <p className="text-xs text-white/40 mt-0.5">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
 
-          <div className="p-6">
-            <h3 className="text-lg font-semibold text-white">
-              {item.title}
-            </h3>
+      {/* PROJECT FLOW */}
+      <Reveal delay={60}>
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff] mb-4">
+            How We Work
+          </p>
+          <div className="space-y-3">
+            {[
+              { step: '01', title: 'Design & Planning', desc: 'Electrical layout and system design.' },
+              { step: '02', title: 'Material Supply', desc: 'Certified component procurement.' },
+              { step: '03', title: 'Installation', desc: 'On-site wiring and system setup.' },
+              { step: '04', title: 'Testing & Handover', desc: 'Verification and client handover.' },
+            ].map((item, i) => (
+              <div key={item.step} className="flex items-start gap-3">
+                <div className="flex flex-col items-center">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#0a84ff]/15 text-xs font-black text-[#7dd3fc] border border-[#0a84ff]/20">
+                    {item.step}
+                  </span>
+                  {i < 3 && <div className="w-px h-3 bg-white/10 mt-1" />}
+                </div>
+                <div className="pb-1">
+                  <p className="text-sm font-semibold text-white">{item.title}</p>
+                  <p className="text-xs text-white/40 mt-0.5">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
 
-            <button
-              onClick={() => setSelectedCredential(item.file)}
-              className="mt-4 w-full rounded-xl bg-[#0a84ff] px-5 py-3 text-sm font-semibold text-white hover:bg-[#158dff]"
-            >
-              View Document
-            </button>
+      {/* CAPABILITIES SELECTOR */}
+      <Reveal delay={80}>
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff] mb-4">
+            Technical Capabilities
+          </p>
+          <div className="space-y-2">
+            {[
+              'Electrical Material Supply',
+              'Control Panels & Protection Systems',
+              'Electromechanical Services',
+              'Testing & Commissioning',
+            ].map((item) => {
+              const isSelected = selectedCapability === item
+              return (
+               <button
+                  key={item}
+                  onClick={() => setSelectedCapability(item)}
+                  className={`w-full text-left rounded-xl border px-4 py-3 text-xs font-semibold transition-all duration-300 cursor-pointer group ${
+                    isSelected
+                      ? 'border-[#0a84ff] bg-[#0a84ff]/15 text-white shadow-[0_0_20px_rgba(10,132,255,0.2)]'
+                      : 'border-white/10 bg-black/20 text-white/50 hover:border-[#0a84ff]/40 hover:bg-[#0a84ff]/5 hover:text-white'
+                  }`}
+                >
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="flex items-center gap-2">
+                      <span className={`h-2 w-2 rounded-full shrink-0 transition-all duration-300 ${
+                        isSelected
+                          ? 'bg-[#0a84ff] shadow-[0_0_6px_rgba(10,132,255,0.8)]'
+                          : 'bg-white/20 group-hover:bg-[#0a84ff]/50'
+                      }`} />
+                      {item}
+                    </span>
+                    <span className={ `text-[10px] transition-all duration-300 ${
+                      isSelected ? 'text-[#7dd3fc]' : 'text-white/20 group-hover:text-[#0a84ff]/60'
+                    }`}>
+                      {isSelected ? '▼ open' : '▶ tap'}
+                    </span>
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+        {selectedCapability ? (
+            <div className="mt-4 rounded-2xl border border-[#0a84ff]/20 bg-[#0a84ff]/5 p-4 relative overflow-hidden">
+              {/* animated top border */}
+              <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981]" />
+
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7dd3fc]">
+                  Technical Details
+                </p>
+                <span className="text-[10px] text-[#0a84ff] font-semibold animate-pulse">
+                  ● Live
+                </span>
+              </div>
+              <p className="text-xs leading-6 text-white/70">
+                {capabilityDetails[selectedCapability]}
+              </p>
+            </div>
+          ) : (
+            <div className="mt-4 rounded-2xl border border-white/5 bg-black/20 p-4 flex items-center justify-center gap-2">
+              <span className="text-lg">👆</span>
+              <p className="text-xs text-white/30">
+                Select a capability above to see details
+              </p>
+            </div>
+          )}
+        </div>
+      </Reveal>
+
+    </div>
+
+    {/* ROW 3 — CERTIFICATIONS */}
+    <Reveal>
+      <div className="mt-5">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
+              Certifications & Credentials
+            </p>
+            <h3 className="mt-1 text-2xl font-bold text-white">Verified Company Documents</h3>
           </div>
         </div>
 
-      ))}
+        <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory">
+          {certifications.map((item) => (
+            <div
+              key={item.title}
+              className="min-w-[260px] sm:min-w-[300px] flex-shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] hover:border-[#0a84ff]/30 transition duration-300"
+            >
+              <img
+                src={item.file}
+                alt={item.title}
+                className="h-52 w-full object-cover"
+              />
+              <div className="p-5">
+                <h3 className="text-sm font-bold text-white">{item.title}</h3>
+                <button
+                  onClick={() => setSelectedCredential(item.file)}
+                  className="mt-3 w-full rounded-xl bg-[#0a84ff] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#158dff] transition"
+                >
+                  View Document
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Reveal>
 
-    </div>
+    {/* ROW 4 — COMPANY PERFORMANCE */}
+    <Reveal>
+      <div className="mt-5 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0a84ff]/8 via-white/[0.02] to-[#10b981]/5 p-8 backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
+              Company Performance
+            </p>
+            <h3 className="mt-1 text-2xl font-bold text-white">Proven Engineering Excellence</h3>
+          </div>
+          <div className="rounded-full border border-[#10b981]/30 bg-[#10b981]/10 px-4 py-1.5 text-xs font-bold text-[#10b981]">
+            ✓ Trusted Across Ethiopia
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { value: '8+', label: 'Years of Experience', color: 'text-[#0a84ff]', glow: 'rgba(10,132,255,0.3)' },
+            { value: '50+', label: 'Engineers & Technicians', color: 'text-[#0a84ff]', glow: 'rgba(10,132,255,0.3)' },
+            { value: '100+', label: 'Projects Delivered', color: 'text-[#0a84ff]', glow: 'rgba(10,132,255,0.3)' },
+            { value: '24/7', label: 'Technical Support', color: 'text-[#10b981]', glow: 'rgba(16,185,129,0.3)' },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-2xl border border-white/10 bg-black/30 p-6 text-center hover:border-white/20 transition duration-300"
+            >
+              <p className={`text-4xl font-black ${stat.color}`}>{stat.value}</p>
+              <p className="mt-2 text-xs text-white/50 leading-5">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-white/5 bg-black/20 p-5 text-center">
+          <p className="text-sm text-white/50">
+            Trusted by{' '}
+            <span className="text-white font-semibold">healthcare institutions</span>,{' '}
+            <span className="text-white font-semibold">universities</span>,{' '}
+            <span className="text-white font-semibold">government projects</span>, and{' '}
+            <span className="text-white font-semibold">industrial infrastructure programs</span>.
+          </p>
+        </div>
+      </div>
+    </Reveal>
 
   </div>
 </section>
-          <section className="px-5 py-20 sm:px-8 lg:px-10">
-  <div className="mx-auto max-w-7xl">
-    
-    <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(10,132,255,0.08),rgba(255,255,255,0.02),rgba(16,185,129,0.04))] p-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-
-      <div className="text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
-          Company Performance
-        </p>
-
-        <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-          Proven Engineering Excellence
-        </h2>
-
-        <p className="mt-4 text-white/60 max-w-2xl mx-auto">
-          Delivering reliable electromechanical, infrastructure, and industrial
-          engineering solutions across Ethiopia.
-        </p>
-      </div>
-
-      <div className="mt-12 grid gap-6 md:grid-cols-4">
-
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center hover:border-[#0a84ff]/40 transition duration-300">
-          <h3 className="text-5xl font-black text-[#0a84ff]">8+</h3>
-          <p className="mt-3 text-white/70">
-            Years of Proven Experience
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center hover:border-[#0a84ff]/40 transition duration-300">
-          <h3 className="text-5xl font-black text-[#0a84ff]">50+</h3>
-          <p className="mt-3 text-white/70">
-            Skilled Engineers & Technicians
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center hover:border-[#0a84ff]/40 transition duration-300">
-          <h3 className="text-5xl font-black text-[#0a84ff]">100+</h3>
-          <p className="mt-3 text-white/70">
-            Projects Successfully Delivered
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center hover:border-[#0a84ff]/40 transition duration-300">
-          <h3 className="text-5xl font-black text-[#10b981]">24/7</h3>
-          <p className="mt-3 text-white/70">
-            Technical & Project Support
-          </p>
-        </div>
-
-      </div>
-
-      <div className="mt-10 rounded-2xl border border-[#0a84ff]/20 bg-[#0a84ff]/5 p-6 text-center">
-        <p className="text-sm text-white/80">
-          Trusted by healthcare institutions, universities, commercial developments,
-          government projects, and industrial infrastructure programs.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-        </section>
 
         {/* --- PORTFOLIO SECTION --- */}
-        <section id="portfolio" className="px-5 py-20 sm:px-8 lg:px-10 border-t border-white/5 bg-black/[0.15]" >
-        {/* --- COMPANY STATS SECTION --- */}
+     {/* --- PORTFOLIO SECTION --- */}
+<section id="portfolio" className="px-5 py-24 sm:px-8 lg:px-10 border-t border-white/5 relative overflow-hidden">
 
-          <div className="mx-auto max-w-7xl">
-            <Reveal>
-              <SectionHeading
-                eyebrow=""
-                title="Selected projects"
-                description="Reviewing our past construction deployment history, custom parameter setups, and high-voltage grid integration schemes completed within strict municipal and health guidelines."
-              />
-            </Reveal>
-
-<div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                 {(showAllProjects
-  ? portfolioProjects
-  : portfolioProjects.slice(0, 3)
-).map((project, index) => (
-                <Reveal key={project.id} delay={index * 100}>
-<div className="
-group
-flex h-full flex-col
-overflow-hidden
-rounded-[2rem]
-border border-white/10
-bg-[#0d1527]/40
-backdrop-blur-xl
-transition-all duration-500
-hover:-translate-y-2
-hover:border-[#0a84ff]/40
-hover:shadow-[0_30px_80px_rgba(10,132,255,0.25)]
-">                    <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/5 bg-white/5">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
-                      />
-                      <div className="absolute left-4 top-4 rounded-xl bg-[#090d15]/90 border border-white/10 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-widest text-[#7dd3fc] backdrop-blur-md">
-                        {project.category}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-6 sm:p-8">
-                      <h3 className="text-lg font-bold tracking-tight text-white group-hover:text-[#0a84ff] transition-colors duration-300 line-clamp-2">
-                        {project.title}
-                      </h3>
-                      <p className="mt-4 flex-1 text-sm leading-7 text-white/60">
-                        {project.description}
-                      </p>
-                      
-                      <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-white/5">
-                        {project.metrics.map((metric) => (
-                          <span key={metric} className="rounded-lg border border-white/5 bg-white/5 px-2.5 py-1 text-xs font-semibold text-[#7dd3fc]">
-                            {metric}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <div className="mt-14 flex flex-col items-center gap-5">
-
-  {/* PROJECT BUTTON */}
-  <button
-  onClick={() => {
-    const nextState = !showAllProjects
-
-    setShowAllProjects(nextState)
-
-    if (!nextState) {
-      setShowContractPortfolio(false)
-    }
-
-    document
-      .getElementById('portfolio')
-      ?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-  }}
-  className="
-    group
-    relative
-    overflow-hidden
-    rounded-full
-    border
-    border-[#0a84ff]/30
-    bg-[#0a84ff]
-    px-8
-    py-4
-    text-sm
-    font-semibold
-    text-white
-    shadow-[0_20px_60px_rgba(10,132,255,0.35)]
-    transition-all
-    duration-300
-    hover:-translate-y-1
-    hover:scale-[1.02]
-  "
->
-  <span className="relative z-10 flex items-center gap-2">
-    {showAllProjects
-      ? "Show Featured Projects"
-      : "Explore Full Portfolio"}
-
-    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-  </span>
-</button>
-
-  {/* SECOND BUTTON */}
-  {showAllProjects && (
-
-    <div className="mt-8 flex justify-center">
-  <button
-    type="button"
-    onClick={() => setShowContractPortfolio(prev => !prev)}
-    className="rounded-2xl border border-white/10 bg-white/5 px-8 py-4 text-white transition hover:border-[#0a84ff]"
-  >
-    {showContractPortfolio
-      ? "Hide Contract Portfolio"
-      : "Explore Contract Portfolio"}
-  </button>
-</div>
-  )}
-
-</div>
-{showContractPortfolio && (
-
-<section className="mt-10">
-
-  <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
-
-    <h2 className="text-3xl font-bold text-white">
-      Financial Project Overview
-    </h2>
-
-    <p className="mt-2 text-white/60">
-      Project values, clients and completed contracts.
-    </p>
-
-<div className="mt-8 w-full overflow-x-auto rounded-2xl border border-white/10">
-      <table className="w-full text-left text-sm text-white/70">
-
-        <thead>
-          <tr className="border-b border-white/10">
-            <th className="px-6 py-4">Project</th>
-            <th className="px-6 py-4">Client</th>
-            <th className="px-6 py-4">Contract Value</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          {clientProjects.map((item, i) => (
-
-            <tr
-              key={i}
-              className="border-b border-white/5 hover:bg-white/5"
-            >
-              <td className="px-6 py-4">
-                {item.project}
-              </td>
-
-              <td className="px-6 py-4">
-                {item.client}
-              </td>
-
-              <td className="px-6 py-4 text-[#7dd3fc] font-semibold">
-                ETB {item.totalAmount.toLocaleString()}
-              </td>
-            </tr>
-
-          ))}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
+  {/* BACKGROUND GLOW */}
+  <div className="pointer-events-none absolute inset-0 -z-10">
+    <div className="absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-[#0a84ff]/5 blur-3xl" />
   </div>
 
+  <div className="mx-auto max-w-7xl">
+
+    {/* HEADER */}
+    <Reveal>
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
+            Our Work
+          </p>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-black text-white">
+            Selected{' '}
+            <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
+              Projects
+            </span>
+          </h2>
+          <p className="mt-3 max-w-xl text-sm leading-7 text-white/50">
+            Real-world electrical engineering deployments across healthcare,
+            government, education, and commercial infrastructure in Ethiopia.
+          </p>
+        </div>
+
+        {/* PROJECT COUNT BADGE */}
+        <div className="shrink-0 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-4 text-center">
+          <p className="text-3xl font-black text-[#0a84ff]">{portfolioProjects.length}+</p>
+          <p className="text-xs text-white/40 mt-1">Projects Shown</p>
+        </div>
+      </div>
+    </Reveal>
+
+    {/* PROJECTS GRID */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {(showAllProjects ? portfolioProjects : portfolioProjects.slice(0, 3)).map((project, index) => (
+        <Reveal key={project.id} delay={index * 80}>
+          <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_30px_80px_rgba(10,132,255,0.2)]">
+
+            {/* IMAGE */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="h-full w-full object-cover opacity-70 transition duration-700 group-hover:scale-110 group-hover:opacity-100"
+              />
+
+              {/* OVERLAY GRADIENT */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1527] via-[#0d1527]/20 to-transparent" />
+
+              {/* CATEGORY BADGE */}
+              <div className="absolute left-4 top-4 rounded-xl border border-white/10 bg-[#090d15]/80 px-3 py-1.5 text-[0.6rem] font-bold uppercase tracking-widest text-[#7dd3fc] backdrop-blur-md">
+                {project.category}
+              </div>
+
+              {/* INDEX NUMBER */}
+              <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-xl bg-[#0a84ff]/20 border border-[#0a84ff]/30 text-xs font-black text-[#7dd3fc]">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+            </div>
+
+            {/* CONTENT */}
+            <div className="flex flex-1 flex-col p-6">
+              <h3 className="text-base font-bold text-white group-hover:text-[#7dd3fc] transition duration-300 line-clamp-2">
+                {project.title}
+              </h3>
+
+              <p className="mt-3 flex-1 text-xs leading-6 text-white/50 line-clamp-3">
+                {project.description}
+              </p>
+
+              {/* DIVIDER */}
+              <div className="my-4 h-px w-full bg-white/5" />
+
+              {/* METRICS */}
+              <div className="flex flex-wrap gap-2">
+                {project.metrics.map((metric) => (
+                  <span
+                    key={metric}
+                    className="rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-2.5 py-1 text-[0.65rem] font-bold text-[#7dd3fc]"
+                  >
+                    {metric}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* BOTTOM GLOW LINE */}
+            <div className="h-[2px] w-0 group-hover:w-full transition-all duration-700 bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981]" />
+
+          </div>
+        </Reveal>
+      ))}
+    </div>
+
+    {/* BUTTONS */}
+    <div className="mt-12 flex flex-col items-center gap-4">
+
+      <button
+        onClick={() => {
+          const nextState = !showAllProjects
+          setShowAllProjects(nextState)
+          if (!nextState) setShowContractPortfolio(false)
+          document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }}
+        className="group inline-flex items-center gap-3 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-8 py-4 text-sm font-bold text-white shadow-[0_15px_40px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(10,132,255,0.45)]"
+      >
+        {showAllProjects ? 'Show Featured Only' : 'Explore Full Portfolio'}
+        <ArrowRight className={`h-4 w-4 transition-all duration-300 ${showAllProjects ? 'rotate-180' : 'group-hover:translate-x-1'}`} />
+      </button>
+
+      {showAllProjects && (
+        <button
+          type="button"
+          onClick={() => setShowContractPortfolio(prev => !prev)}
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 transition-all duration-300 hover:border-[#0a84ff]/40 hover:text-white"
+        >
+          {showContractPortfolio ? 'Hide Contract Portfolio' : 'View Contract Portfolio'}
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      )}
+    </div>
+
+    {/* CONTRACT PORTFOLIO TABLE */}
+    {showContractPortfolio && (
+      <Reveal>
+        <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
+
+          <div className="px-8 py-6 border-b border-white/10">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
+              Financial Overview
+            </p>
+            <h3 className="mt-1 text-2xl font-bold text-white">Contract Portfolio</h3>
+            <p className="mt-1 text-sm text-white/40">
+              Project values, clients and completed contracts.
+            </p>
+          </div>
+
+          <div className="w-full overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.02]">
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">#</th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Project</th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Client</th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white/40">Contract Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientProjects.map((item, i) => (
+                  <tr key={i} className="border-b border-white/5 hover:bg-white/[0.03] transition duration-200">
+                    <td className="px-6 py-4 text-xs font-bold text-white/20">
+                      {String(i + 1).padStart(2, '0')}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-white/70">{item.project}</td>
+                    <td className="px-6 py-4 text-sm text-white/50">{item.client}</td>
+                    <td className="px-6 py-4">
+                      <span className="rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1 text-xs font-bold text-[#7dd3fc]">
+                        ETB {item.totalAmount.toLocaleString()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* TOTAL */}
+          <div className="px-8 py-5 border-t border-white/10 flex items-center justify-between">
+            <p className="text-sm text-white/40">Total Contract Value</p>
+            <span className="rounded-xl border border-[#10b981]/30 bg-[#10b981]/10 px-4 py-2 text-sm font-black text-[#10b981]">
+              ETB {clientProjects.reduce((sum, item) => sum + item.totalAmount, 0).toLocaleString()}
+            </span>
+          </div>
+
+        </div>
+      </Reveal>
+    )}
+
+  </div>
 </section>
 
-)}
-      {/* --- CLIENT PROJECTS TABLE --- */}
-
-        </section>
-
         {/* --- SERVICES SECTION --- */}
-       {/* --- SERVICES SECTION (MODERN UPGRADE) --- */}
 <section
   id="services"
   className="px-5 py-24 sm:px-8 lg:px-10 border-t border-white/5 bg-[#070b12]"
@@ -1315,153 +1398,197 @@ id={`faq-button-${index}`}
 
     {/* GRID */}
 <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-        {/* LEFT SIDE */}
-<div className="flex flex-col gap-6 h-full">
-        {/* HEADQUARTERS */}
-        <div className="rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-xl p-7">
-          
-          <h3 className="mt-3 text-2xl font-semibold text-white">
-             View Office Location
-          </h3>
+       {/* LEFT SIDE */}
+<div className="flex flex-col gap-5 h-full">
 
-          <p className="mt-3 text-sm text-white/60 leading-7">
-            Available for industrial, healthcare, government and commercial engineering projects across Ethiopia.
-          </p>
+  {/* SMALL STATUS CARD */}
+  <div className="rounded-3xl border border-[#0a84ff]/20 bg-gradient-to-br from-[#0b1220] to-[#101827] p-6">
 
-          <div className="mt-6 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs text-white/60">
-              Currently accepting new projects
-            </span>
-          </div>
-        </div>
+    <div className="flex items-center justify-between">
 
-        {/* CONTACT CARDS */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">{[
-  {
-    label: "Phone",
-    type: "dropdown",
-    icon: PhoneCall,
-    options: [
-      { text: "+251 974 438 122" },
-      { text: "+251 911 137 775" },
-      { text: "+251 911 045 505" }
-    ]
-  },
-  
-  {
-    label: "Telegram",
-    value: "@Biruk002",
-    icon: Send,
-    href: "https://t.me/Biruk002"
-  },
+      <div>
+        <p className="text-xs uppercase tracking-[0.3em] text-[#7dd3fc]">
+          Office
+        </p>
 
-  // ✅ ADD THIS HERE
-  {
-    label: "LinkedIn",
-    value: "Biruk Yisihak",
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/biruk-yisihak/"
-  },
+        <h3 className="mt-2 text-2xl font-bold text-white">
+          Addis Ababa, Ethiopia
+        </h3>
 
-  {
-    label: "Location",
-    value: "British Embassy – Yeka (Megenagna area), Addis Ababa",
-    icon: MapPin,
-    href: "https://www.google.com/maps/search/?api=1&query=British+Embassy+Addis+Ababa+Comoros+Street"
-  }
-].map((item) => (
-
-  item.type === "dropdown" ? (
-    /* 🔥 DROPDOWN CARD (PHONE) */
-    <div
-      key={item.label}
-      className="rounded-2xl border border-white/5 bg-white/[0.02] p-4"
-    >
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center text-[#7dd3fc] border border-white/5">
-          <item.icon className="h-5 w-5" />
-        </div>
-
-        <div className="min-w-0">
-          <p className="text-[10px] uppercase tracking-widest text-white/40">
-            {item.label}
-          </p>
-
-          <p className="text-sm font-medium text-white/80">
-            Available Numbers
-          </p>
-        </div>
+        <p className="mt-2 text-sm leading-6 text-white/60">
+          Electrical engineering services for commercial,
+          industrial and government projects.
+        </p>
       </div>
 
-      <div className="mt-3 space-y-2">
-      {item.options.map((opt: any) => (
-  <a
-    key={opt.text}
-    href={`tel:${opt.text.replace(/\s+/g, '')}`}
-    className="
-      flex items-center justify-between
-      rounded-xl
-      border border-white/10
-      bg-white/[0.03]
-      px-3 py-3
-      text-sm font-medium
-      text-[#7dd3fc]
-      transition-all duration-300
-      hover:border-[#0a84ff]
-      hover:bg-[#0a84ff]/10
-      hover:text-white
-    "
-  >
-    <span>{opt.text}</span>
-    <PhoneCall className="h-4 w-4" />
-  </a>
-))}
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0a84ff]/15">
+        <MapPin className="h-7 w-7 text-[#7dd3fc]" />
       </div>
+
     </div>
 
-  ) : (
+    <div className="mt-5 flex items-center gap-2 rounded-xl border border-[#10b981]/20 bg-[#10b981]/10 px-4 py-3">
 
-    /* 🔥 NORMAL CARDS (EMAIL, TELEGRAM, LOCATION) */
+      <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"/>
+
+      <span className="text-xs font-semibold text-[#10b981]">
+        Currently Accepting New Projects
+      </span>
+
+    </div>
+
+  </div>
+
+  {/* CONTACT CARDS */}
+  <div className="grid gap-4">
+
+    {/* PHONE DROPDOWN */}
+    <details className="group rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
+
+      <summary className="flex cursor-pointer list-none items-center justify-between p-5 hover:bg-white/[0.04]">
+
+        <div className="flex items-center gap-4">
+
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
+            <PhoneCall className="h-5 w-5 text-[#7dd3fc]" />
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.25em] text-white/40">
+              Phone
+            </p>
+
+            <h4 className="text-sm font-semibold text-white">
+              Available Numbers
+            </h4>
+          </div>
+
+        </div>
+
+        <ChevronRight className="h-5 w-5 text-white/40 transition group-open:rotate-90" />
+
+      </summary>
+
+      <div className="border-t border-white/5 p-4 space-y-2">
+
+        {[
+          "+251 974 438 122",
+          "+251 911 137 775",
+          "+251 911 045 505",
+        ].map((phone) => (
+
+          <a
+            key={phone}
+            href={`tel:${phone.replace(/\s+/g, "")}`}
+            className="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 transition hover:border-[#0a84ff] hover:bg-[#0a84ff]/10"
+          >
+            <span className="text-sm font-medium text-white">
+              {phone}
+            </span>
+
+            <PhoneCall className="h-4 w-4 text-[#7dd3fc]" />
+          </a>
+
+        ))}
+
+      </div>
+
+    </details>
+
+    {/* TELEGRAM */}
+
     <a
-      key={item.label}
-      href={item.href}
-      className="rounded-2xl border border-white/5 bg-white/[0.02] p-4 flex items-center gap-3
-      hover:border-white/10 hover:bg-white/[0.05] transition-all duration-300"
+      href="https://t.me/Biruk002"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
     >
-      <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center text-[#7dd3fc] border border-white/5">
-        <item.icon className="h-5 w-5" />
+
+      <div className="flex items-center gap-4">
+
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
+          <Send className="h-5 w-5 text-[#7dd3fc]" />
+        </div>
+
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-white/40">
+            Telegram
+          </p>
+
+          <h4 className="text-sm font-semibold text-white">
+            @Biruk002
+          </h4>
+        </div>
+
       </div>
 
-      <div className="min-w-0">
-        <p className="text-[10px] uppercase tracking-widest text-white/40">
-          {item.label}
-        </p>
-
-        <p className="text-sm font-medium text-white/80 truncate">
-          {item.value}
-        </p>
-      </div>
     </a>
 
-  )
+    {/* LINKEDIN */}
 
-))}
+    <a
+      href="https://www.linkedin.com/in/biruk-yisihak/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
+    >
+
+      <div className="flex items-center gap-4">
+
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
+          <FaLinkedin className="h-5 w-5 text-[#7dd3fc]" />
         </div>
 
-        {/* RESPONSE TIME */}
-        <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#7dd3fc]/70">
-            Response Time
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-white/40">
+            LinkedIn
           </p>
-          <p className="mt-2 text-sm text-white/60 leading-6">
-            Typically within 24 hours for engineering inquiries and project proposals.
+
+          <h4 className="text-sm font-semibold text-white">
+            Biruk Yisihak
+          </h4>
+        </div>
+
+      </div>
+
+    </a>
+
+    {/* LOCATION */}
+
+    <a
+      href="https://www.google.com/maps/search/?api=1&query=British+Embassy+Addis+Ababa+Comoros+Street"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
+    >
+
+      <div className="flex items-center gap-4">
+
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
+          <MapPin className="h-5 w-5 text-[#7dd3fc]" />
+        </div>
+
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-white/40">
+            Office Location
+          </p>
+
+          <h4 className="text-sm font-semibold text-white">
+            British Embassy – Yeka
+          </h4>
+
+          <p className="text-xs text-white/40 mt-1">
+            Opposite Megenagna, Addis Ababa
           </p>
         </div>
 
       </div>
 
-      {/* RIGHT SIDE FORM */}
+    </a>
+
+  </div>
+
+</div>
 {/* RIGHT SIDE FORM */}
 <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 h-full flex flex-col">
 
@@ -1640,6 +1767,12 @@ id={`faq-button-${index}`}
     </div>
   </div>
 )}
+<button
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-[#0a84ff] shadow-[0_8px_30px_rgba(10,132,255,0.4)] flex items-center justify-center hover:scale-110 transition"
+>
+  <ArrowRight className="h-5 w-5 rotate-[-90deg] text-white" />
+</button>
  </main>
 
       {/* --- Footer Component --- */}
