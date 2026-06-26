@@ -1348,12 +1348,7 @@ id={`faq-button-${index}`}
       { text: "+251 911 045 505" }
     ]
   },
-  {
-    label: "Email",
-    value: "birukyisihak3@gmail.com",
-    icon: Mail,
-href: "https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
-  },
+  
   {
     label: "Telegram",
     value: "@Biruk002",
