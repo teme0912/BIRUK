@@ -758,7 +758,6 @@ hover:bg-[#1593ff]
     {/* ROW 2 — STRENGTHS + FLOW + CAPABILITIES */}
     <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-      {/* CORE STRENGTHS */}
       <Reveal>
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl">
           <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff] mb-4">
@@ -766,10 +765,10 @@ hover:bg-[#1593ff]
           </p>
           <div className="space-y-3">
             {[
-              { icon: '⚡', title: 'Power Distribution', desc: 'Safe electrical networks for buildings.' },
-              { icon: '🔌', title: 'Building Wiring', desc: 'International safety code compliant.' },
-              { icon: '📦', title: 'Material Supply', desc: 'Certified cables, panels, breakers.' },
-              { icon: '🧪', title: 'Testing & Commissioning', desc: 'Full verification and documentation.' },
+              {  title: 'Power Distribution', desc: 'Safe electrical networks for buildings.' },
+              {  title: 'Building Wiring', desc: 'International safety code compliant.' },
+              {  title: 'Material Supply', desc: 'Certified cables, panels, breakers.' },
+              {  title: 'Testing & Commissioning', desc: 'Full verification and documentation.' },
             ].map((item) => (
               <div
                 key={item.title}
