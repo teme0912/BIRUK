@@ -589,19 +589,19 @@ For Critical Infrastructure
 </span>
 </h1><div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
 
-  <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
     Electrical Installation
   </span>
 
-  <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
     Electrical Material Supply
   </span>
 
-  <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
     Power Distribution
   </span>
 
-  <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
+  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
     Testing & Commissioning
   </span>
 
