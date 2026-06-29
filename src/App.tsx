@@ -292,7 +292,8 @@ const [selectedCapability, setSelectedCapability] = useState<string | null>(null
 const [showAllProjects, setShowAllProjects] = useState(false)
 const [showContractPortfolio, setShowContractPortfolio] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
-  
+const contactFormRef = useRef<HTMLDivElement>(null)
+const [formGlow, setFormGlow] = useState(false)  
 
   const validateForm = (values: ContactFormValues) => {
     const nextErrors: ContactFormErrors = {}
@@ -496,32 +497,23 @@ truncate
           
           
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-                    href="#contact"
-className="
-inline-flex
-items-center
-justify-center
-gap-2
-rounded-full
-bg-[#0a84ff]
-px-7
-py-4
-text-sm
-font-semibold
-text-white
-shadow-[0_15px_40px_rgba(10,132,255,0.4)]
-transition-all
-duration-300
-hover:-translate-y-1
-hover:scale-105
-hover:bg-[#1593ff]
-"                  >
-              Request Quote
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-
+  <button
+    type="button"
+    onClick={() => {
+      const offset = contactFormRef.current?.getBoundingClientRect().top ?? 0
+      window.scrollBy({ top: offset - 80, behavior: 'smooth' })
+      setTimeout(() => {
+        setFormGlow(true)
+        contactFormRef.current?.querySelector('input')?.focus()
+        setTimeout(() => setFormGlow(false), 1500)
+      }, 600)
+    }}
+    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(10,132,255,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#1593ff]"
+  >
+    Request Quote
+    <ArrowRight className="h-4 w-4" />
+  </button>
+</div>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/85 transition hover:border-white/25 hover:bg-white/10 lg:hidden"
@@ -546,14 +538,25 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0a84ff] px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,132,255,0.3)]"
-              >
-                Request Quote
-                <ArrowRight className="h-4 w-4" />
-              </a>
+             <button
+  type="button"
+  onClick={() => {
+    setMobileMenuOpen(false)
+    setTimeout(() => {
+      const offset = contactFormRef.current?.getBoundingClientRect().top ?? 0
+      window.scrollBy({ top: offset - 80, behavior: 'smooth' })
+      setTimeout(() => {
+        setFormGlow(true)
+        contactFormRef.current?.querySelector('input')?.focus()
+        setTimeout(() => setFormGlow(false), 1500)
+      }, 600)
+    }, 300)
+  }}
+  className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0a84ff] px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,132,255,0.3)]"
+>
+  Request Quote
+  <ArrowRight className="h-4 w-4" />
+</button>
             </div>
           </div>
         ) : null}
@@ -606,14 +609,14 @@ For Critical Infrastructure
 </div>
                <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white">
   We specialize in{' '}
-  <span className="font-black text-[#7dd3fc]">advanced building electrical installations</span>,{' '}
-  <span className="font-black text-[#7dd3fc]">premium material supply</span>,{' '}
-  <span className="font-black text-[#7dd3fc]">precision testing</span>, and{' '}
-  <span className="font-black text-[#7dd3fc]">certified commissioning services</span>.{' '}
+advanced building electrical installations{' '}
+  premium material supply{' '}
+  precision testing and{' '}
+  certified commissioning services.{' '}
   From heavy industrial infrastructure to commercial complexes, we deliver{' '}
-  <span className="font-black text-[#0a84ff]">high-quality engineering systems</span>{' '}
+  high-quality engineering systems{' '}
   designed for{' '}
-  <span className="font-black text-[#10b981]">safe, reliable, and efficient operation</span>.
+ safe, reliable, and efficient operation.
 </p>
 
                 <div className="mt-8 hero-cta-wrap">
@@ -669,7 +672,7 @@ hover:bg-[#1593ff]
         </h2>
         <p className="mt-2 max-w-2xl text-base text-white/50 leading-7">
           A certified Grade "ሀ" electrical engineering company delivering safe,
-          reliable, and code-compliant power systems across Ethiopia since 2016.
+          reliable, and code-compliant power systems across Ethiopia since 2010.
         </p>
       </div>
     </Reveal>
@@ -1392,6 +1395,7 @@ id={`faq-button-${index}`}
         </section>
  
 <section
+  ref={contactFormRef}
   id="contact"
   className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 border-t border-white/5 bg-gradient-to-b from-[#070b12] to-[#05070c]"
 >
@@ -1597,7 +1601,8 @@ id={`faq-button-${index}`}
 
 </div>
 {/* RIGHT SIDE FORM */}
-<div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 h-full flex flex-col">
+<div className={`rounded-2xl border bg-white/[0.03] backdrop-blur-xl p-4 h-full flex flex-col transition-all duration-500 ${formGlow ? 'form-highlight border-[#0a84ff]/60' : 'border-white/10'}`}>
+
 
   {/* HEADER */}
 <div className="mb-4 border-b border-white/5 pb-3">
@@ -1694,7 +1699,7 @@ id={`faq-button-${index}`}
     className={inputClassName(formErrors.phone)}
     value={formValues.phone}
     onChange={(e) => updateField("phone", e.target.value)}
-    placeholder="+251911123456"
+    placeholder="+2519........"
   />
 </FieldLabel>
     {/* PROJECT TYPE */}
@@ -1785,7 +1790,7 @@ id={`faq-button-${index}`}
 
       {/* --- Footer Component --- */}
       <footer className="border-t border-white/10 bg-[#060a12] px-4 py-10 sm:px-8 sm:py-12 lg:px-10">
-<div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">          
+<div className="flex flex-col gap-8 items-center text-center">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-3">
 
