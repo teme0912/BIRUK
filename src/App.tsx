@@ -732,11 +732,11 @@ hover:bg-[#1593ff]
           </p>
           <div className="space-y-3">
             {[
-              { icon: '🏥', label: 'Healthcare Institutions' },
-              { icon: '🏛️', label: 'Government Projects' },
-              { icon: '🎓', label: 'Universities & Campuses' },
-              { icon: '🏗️', label: 'Industrial Infrastructure' },
-  { icon: '🏢', label: 'Commercial Complexes and 🏘️Residential Developments'},
+              {  label: 'Healthcare Institutions' },
+              {  label: 'Government Projects' },
+              {  label: 'Universities & Campuses' },
+              {  label: 'Industrial Infrastructure' },
+  { label: 'Commercial Complexes and Residential Developments'},
  
 
              
@@ -745,7 +745,6 @@ hover:bg-[#1593ff]
                 key={item.label}
                 className="flex items-center gap-3 rounded-xl border border-white/5 bg-black/20 px-4 py-3 hover:border-[#0a84ff]/20 transition duration-300"
               >
-                <span className="text-base">{item.icon}</span>
                 <span className="text-sm text-white/60">{item.label}</span>
               </div>
             ))}
@@ -774,7 +773,6 @@ hover:bg-[#1593ff]
                 key={item.title}
                 className="flex items-start gap-3 rounded-xl border border-white/5 bg-black/20 px-4 py-3 hover:border-[#0a84ff]/20 transition duration-300"
               >
-                <span className="text-base mt-0.5">{item.icon}</span>
                 <div>
                   <p className="text-sm font-semibold text-white">{item.title}</p>
                   <p className="text-xs text-white/40 mt-0.5">{item.desc}</p>
