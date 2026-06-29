@@ -1146,14 +1146,6 @@ hover:bg-[#1593ff]
             </table>
           </div>
 
-          {/* TOTAL */}
-          <div className="px-4 sm:px-8 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-sm text-white/40">Total Contract Value</p>
-            <span className="rounded-xl border border-[#10b981]/30 bg-[#10b981]/10 px-4 py-2 text-sm font-black text-[#10b981]">
-              ETB {clientProjects.reduce((sum, item) => sum + item.totalAmount, 0).toLocaleString()}
-            </span>
-          </div>
-
         </div>
       </Reveal>
     )}
