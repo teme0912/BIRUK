@@ -451,23 +451,27 @@ useEffect(() => {
 className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-hover:scale-110"    />
   </span>
 
-  {/* NAME */}
-<span className="
-text-lg sm:text-2xl
-font-black
-uppercase
-tracking-[0.2em] sm:tracking-[0.35em]
-bg-gradient-to-r
-from-[#0a84ff]
-via-[#7dd3fc]
-to-[#10b981]
-bg-clip-text
-text-transparent
-transition
-duration-300
-truncate
-">    Biruk
+  <span className="flex flex-col">
+  <span className="
+    text-lg sm:text-2xl
+    font-black
+    uppercase
+    tracking-[0.2em] sm:tracking-[0.35em]
+    bg-gradient-to-r
+    from-[#0a84ff]
+    via-[#7dd3fc]
+    to-[#10b981]
+    bg-clip-text
+    text-transparent
+    transition
+    duration-300
+    truncate
+    leading-tight
+  ">Biruk</span>
+  <span className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7dd3fc]/60 leading-tight">
+    Trading PLC
   </span>
+</span>
 
 </a>
 <div className="hidden items-center gap-2 lg:flex">
@@ -589,19 +593,19 @@ For Critical Infrastructure
 </span>
 </h1><div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
 
-  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
+  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Electrical Installation
   </span>
 
-  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
+  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Electrical Material Supply
   </span>
 
-  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
+  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Power Distribution
   </span>
 
-  <span className="rounded-2xl border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full">
+  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Testing & Commissioning
   </span>
 
