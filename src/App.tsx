@@ -149,6 +149,7 @@ const certifications = [
   file: "/biru4.jpg"
 }
 ]
+
 const clientProjects = [
   {
     project: "Nifas Silk Lafto Sub City Building (2B+ G+11)",
@@ -832,7 +833,7 @@ hover:bg-[#1593ff]
               return (
                <button
                   key={item}
-                  onClick={() => setSelectedCapability(item)}
+onClick={() => setSelectedCapability(isSelected ? null : item)}
                   className={`w-full text-left rounded-xl border px-4 py-3 text-xs font-semibold transition-all duration-300 cursor-pointer group ${
                     isSelected
                       ? 'border-[#0a84ff] bg-[#0a84ff]/15 text-white shadow-[0_0_20px_rgba(10,132,255,0.2)]'
@@ -851,7 +852,7 @@ hover:bg-[#1593ff]
                     <span className={ `text-[10px] transition-all duration-300 ${
                       isSelected ? 'text-[#7dd3fc]' : 'text-white/20 group-hover:text-[#0a84ff]/60'
                     }`}>
-                      {isSelected ? '▼ open' : '▶ tap'}
+{isSelected ? '▲ close' : '▶ tap'}
                     </span>
                   </span>
                 </button>
@@ -1146,6 +1147,7 @@ hover:bg-[#1593ff]
             </table>
           </div>
 
+
         </div>
       </Reveal>
     )}
@@ -1242,7 +1244,124 @@ hover:bg-[#1593ff]
     </div>
   </div>
 </section>
+{/* --- PRODUCTS SECTION --- */}
+<section id="products" className="px-4 py-16 sm:px-8 sm:py-24 lg:px-10 border-t border-white/5 bg-[#060a12]">
+  <div className="mx-auto max-w-7xl">
 
+    <Reveal>
+      <div className="flex flex-col gap-2 mb-14">
+        <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">Available Now</span>
+        <h2 className="text-4xl sm:text-5xl font-black text-white">
+          Electrical <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">Products for Sale</span>
+        </h2>
+        <p className="mt-2 max-w-2xl text-base text-white/50 leading-7">
+          Industrial-grade electrical materials sourced and supplied directly. Contact us to order or request bulk pricing.
+        </p>
+      </div>
+    </Reveal>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        {
+          emoji: '🔋',
+          name: 'Industrial Generators',
+          range: '5 kVA – 1200 kVA',
+          desc: 'Diesel and gas generators for commercial and industrial backup power. Multiple capacity ratings available.',
+          badge: 'In Stock',
+          badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
+        },
+        {
+          emoji: '🔌',
+          name: 'Power Cables',
+          range: '1.5mm² × 2C to 3×300mm²+150mm²',
+          desc: 'High-quality armoured and non-armoured power cables for low and medium voltage distribution.',
+          badge: 'In Stock',
+          badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
+        },
+        {
+          emoji: '⚡',
+          name: 'Automatic Transfer Switches (ATS)',
+          range: 'Full range available',
+          desc: 'Automatic changeover switches for seamless generator/mains switching in critical facilities.',
+          badge: 'Available',
+          badgeColor: 'text-[#7dd3fc] border-[#0a84ff]/30 bg-[#0a84ff]/10',
+        },
+        {
+          emoji: '🗳️',
+          name: 'Control Panels (MCB/MCCB/ACB)',
+          range: 'Custom built',
+          desc: 'Factory-assembled distribution boards and switchgear panels built to specification.',
+          badge: 'Built to Order',
+          badgeColor: 'text-[#fbbf24] border-[#fbbf24]/30 bg-[#fbbf24]/10',
+        },
+        {
+          emoji: '💡',
+          name: 'Lighting Systems',
+          range: 'Street, industrial & garden',
+          desc: 'LED street poles (4–6m), industrial high-bay fittings, and garden lighting complete with accessories.',
+          badge: 'In Stock',
+          badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
+        },
+        {
+          emoji: '🔧',
+          name: 'Energy Meters & Terminal Boxes',
+          range: 'Single & three phase',
+          desc: 'Metering equipment, terminal boxes with phase bars, and full distribution accessories for panel builds.',
+          badge: 'Available',
+          badgeColor: 'text-[#7dd3fc] border-[#0a84ff]/30 bg-[#0a84ff]/10',
+        },
+      ].map((product, i) => (
+        <Reveal key={i} delay={i * 60}>
+          <div className="group relative flex flex-col h-full rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_20px_60px_rgba(10,132,255,0.15)]">
+            <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-[#0a84ff]/8 via-transparent to-[#10b981]/5" />
+
+            <div className="relative flex items-start justify-between mb-4">
+              <span className="text-3xl">{product.emoji}</span>
+              <span className={`rounded-full border px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider ${product.badgeColor}`}>
+                {product.badge}
+              </span>
+            </div>
+
+            <h3 className="relative text-base font-bold text-white group-hover:text-[#7dd3fc] transition duration-300">
+              {product.name}
+            </h3>
+            <p className="relative mt-1 text-[0.7rem] font-semibold text-[#0a84ff] uppercase tracking-wider">
+              {product.range}
+            </p>
+            <p className="relative mt-3 flex-1 text-xs leading-6 text-white/50">
+              {product.desc}
+            </p>
+
+           <a 
+              href="#contact"
+              className="relative mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2.5 text-xs font-bold text-[#7dd3fc] transition hover:bg-[#0a84ff] hover:text-white hover:border-[#0a84ff]"
+            >
+              Enquire / Order
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+
+    <Reveal delay={100}>
+      <div className="mt-10 rounded-3xl border border-[#0a84ff]/20 bg-gradient-to-br from-[#0a84ff]/8 to-transparent p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">Bulk Orders & Custom Supply</p>
+          <h3 className="mt-1 text-xl font-bold text-white">Need a full materials list for your project?</h3>
+          <p className="mt-1 text-sm text-white/50">We handle procurement, import, and delivery. Request a quote with your BOQ.</p>
+        </div>
+        
+         <a href="#contact"
+          className="shrink-0 inline-flex items-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] hover:-translate-y-1 hover:bg-[#1593ff] transition-all duration-300"
+        >
+          Request Quote <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </Reveal>
+
+  </div>
+</section>
         {/* --- TRUST SECTION / HORIZONTAL TICKER --- */}
         <section id="trust" className="px-4 py-10 sm:px-8 lg:px-10 bg-black/[0.1]">
         
@@ -1296,7 +1415,137 @@ hover:bg-[#1593ff]
   </div>
 
 </div>
-              </div>
+       {/* --- TESTIMONIALS --- */}
+<Reveal delay={60}>
+  <div className="mt-10">
+
+    {/* header */}
+    <div className="mb-8">
+      <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">Client Reviews</p>
+      <h3 className="mt-2 text-2xl font-bold text-white">
+        What Our{' '}
+        <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
+          Clients Say
+        </span>
+      </h3>
+      <p className="mt-2 text-sm text-white/40">
+        Real feedback from project managers, engineers, and site supervisors.
+      </p>
+    </div>
+
+    {/* testimonial cards */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      {[
+        {
+          stars: 5,
+          quote: 'Biruk Trading delivered our 1200 KVA transformer installation on time and passed all load tests on first attempt. Their panel integration was flawless.',
+          name: 'Tesfaye Mulugeta',
+          role: 'Site Manager',
+          company: 'ETETE Construction',
+          project: 'Minilik Hospital',
+          initials: 'TM',
+          featured: true,
+        },
+        {
+          stars: 5,
+          quote: 'We trusted them with ACB control panels for the Lideta Admin Complex. Every feed above 1200A was safe, documented, and commissioned correctly.',
+          name: 'Abreham Kebede',
+          role: 'Electrical Engineer',
+          company: 'AV Engineering',
+          project: 'Lideta Complex',
+          initials: 'AK',
+          featured: false,
+        },
+        {
+          stars: 5,
+          quote: 'ETB 19M contract executed professionally. Cable routing, material supply, and final handover were all handled without delays or rework.',
+          name: 'Biniam Hailu',
+          role: 'Project Director',
+          company: 'ETETE Construction',
+          project: 'FHC Zenebe Work 3',
+          initials: 'BH',
+          featured: false,
+        },
+        {
+          stars: 5,
+          quote: 'The corridor light pole installation was precise and completed ahead of schedule. Their team understood municipal specs perfectly.',
+          name: 'Selam Mengiste',
+          role: 'Infrastructure Lead',
+          company: 'Addis Ababa Municipality',
+          project: 'Urban Corridor',
+          initials: 'SM',
+          featured: false,
+        },
+      ].map((t, i) => (
+        <div
+          key={i}
+          className={`flex flex-col gap-4 rounded-3xl border p-6 backdrop-blur-xl transition duration-300 ${
+            t.featured
+              ? 'border-[#0a84ff]/30 bg-[#0a84ff]/5'
+              : 'border-white/8 bg-white/[0.02] hover:border-[#0a84ff]/20'
+          }`}
+        >
+          {/* stars */}
+          <div className="flex gap-0.5">
+            {Array.from({ length: t.stars }).map((_, s) => (
+              <span key={s} className="text-[#fbbf24] text-sm">★</span>
+            ))}
+          </div>
+
+          {/* quote mark */}
+          <p className="text-[#0a84ff] text-2xl leading-none">"</p>
+
+          {/* quote text */}
+          <p className="text-sm leading-7 text-white/60 italic -mt-3">
+            {t.quote}
+          </p>
+
+          {/* divider */}
+          <div className="h-px w-full bg-white/5" />
+
+          {/* author row */}
+          <div className="flex items-center gap-3">
+
+            {/* avatar */}
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#0a84ff]/30 bg-[#0a84ff]/15 text-xs font-bold text-[#7dd3fc]">
+              {t.initials}
+            </div>
+
+            {/* name + role */}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-white">{t.name}</p>
+              <p className="text-[11px] text-white/35">{t.role} · {t.company}</p>
+            </div>
+
+            {/* project badge */}
+            <span className="shrink-0 rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-2.5 py-1 text-[10px] font-bold text-[#7dd3fc] uppercase tracking-wider">
+              {t.project}
+            </span>
+
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* trust stats bar */}
+    <div className="mt-6 grid grid-cols-3 gap-4">
+      {[
+        { value: '100%', label: 'Projects passed commissioning' },
+        { value: '12+', label: 'Repeat clients' },
+        { value: 'ETB 37M+', label: 'Total contract value delivered' },
+      ].map((stat) => (
+        <div
+          key={stat.label}
+          className="rounded-2xl border border-white/8 bg-white/[0.02] p-4 text-center"
+        >
+          <p className="text-2xl font-black text-[#0a84ff]">{stat.value}</p>
+          <p className="mt-1.5 text-[11px] text-white/35 leading-5">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</Reveal>       </div>
             </Reveal>
 
             <div className="mt-12 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
