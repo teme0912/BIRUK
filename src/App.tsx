@@ -1174,32 +1174,26 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
         {
           title: "Power Distribution Systems",
           desc: "Design and execution of safe and stable electrical power distribution networks for buildings and industrial facilities.",
-          icon: "⚡"
         },
         {
           title: "Electrical Wiring Installation",
           desc: "Complete internal and external wiring systems aligned with international building electrical standards and safety codes.",
-          icon: "🔌"
         },
         {
           title: "Building Electrical Compliance",
           desc: "Ensuring all installations follow approved electrical building codes, safety regulations, and inspection requirements.",
-          icon: "📐"
         },
         {
           title: "Electrical Material Supply",
           desc: "Provision of certified electrical components, cables, breakers, panels, and distribution accessories for projects.",
-          icon: "📦"
         },
         {
           title: "Site Installation Support",
           desc: "On-site supervision and support for electrical installation, routing, and system setup during construction phases.",
-          icon: "🏗️"
         },
         {
           title: "System Testing & Verification",
           desc: "Basic electrical testing, continuity checks, and functional verification before system activation.",
-          icon: "🧪"
         }
       ].map((service, i) => (
         <div
@@ -1221,7 +1215,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
 
           {/* ICON */}
           <div className="relative flex items-center gap-3">
-            <div className="text-2xl">{service.icon}</div>
 
             <h3 className="text-base font-semibold text-white group-hover:text-[#0a84ff] transition">
               {service.title}
@@ -1263,7 +1256,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {[
         {
-          emoji: '🔋',
           name: 'Industrial Generators',
           range: '5 kVA – 1200 kVA',
           desc: 'Diesel and gas generators for commercial and industrial backup power. Multiple capacity ratings available.',
@@ -1271,7 +1263,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
         },
         {
-          emoji: '🔌',
           name: 'Power Cables',
           range: '1.5mm² × 2C to 3×300mm²+150mm²',
           desc: 'High-quality armoured and non-armoured power cables for low and medium voltage distribution.',
@@ -1279,7 +1270,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
         },
         {
-          emoji: '⚡',
           name: 'Automatic Transfer Switches (ATS)',
           range: 'Full range available',
           desc: 'Automatic changeover switches for seamless generator/mains switching in critical facilities.',
@@ -1287,7 +1277,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           badgeColor: 'text-[#7dd3fc] border-[#0a84ff]/30 bg-[#0a84ff]/10',
         },
         {
-          emoji: '🗳️',
           name: 'Control Panels (MCB/MCCB/ACB)',
           range: 'Custom built',
           desc: 'Factory-assembled distribution boards and switchgear panels built to specification.',
@@ -1295,7 +1284,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           badgeColor: 'text-[#fbbf24] border-[#fbbf24]/30 bg-[#fbbf24]/10',
         },
         {
-          emoji: '💡',
           name: 'Lighting Systems',
           range: 'Street, industrial & garden',
           desc: 'LED street poles (4–6m), industrial high-bay fittings, and garden lighting complete with accessories.',
@@ -1303,7 +1291,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           badgeColor: 'text-[#10b981] border-[#10b981]/30 bg-[#10b981]/10',
         },
         {
-          emoji: '🔧',
           name: 'Energy Meters & Terminal Boxes',
           range: 'Single & three phase',
           desc: 'Metering equipment, terminal boxes with phase bars, and full distribution accessories for panel builds.',
@@ -1316,7 +1303,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
             <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-[#0a84ff]/8 via-transparent to-[#10b981]/5" />
 
             <div className="relative flex items-start justify-between mb-4">
-              <span className="text-3xl">{product.emoji}</span>
               <span className={`rounded-full border px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider ${product.badgeColor}`}>
                 {product.badge}
               </span>
