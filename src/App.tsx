@@ -594,12 +594,13 @@ For Critical Infrastructure
   </span>
 
 <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
- Power Distribution
-  </span>
+  Electrical Material Supply
+</span>
 
   <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
 
-    Electrical Material Supply
+  Power Distribution
+
   </span>
 
 <span className="rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-2 text-xs font-black text-white shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm">
