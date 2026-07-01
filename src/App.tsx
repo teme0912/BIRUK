@@ -320,6 +320,8 @@ useEffect(() => {
   // Interactive state tracking for the corporate capabilities panel
 const [selectedCapability, setSelectedCapability] = useState<string | null>(null)  
 const [showAllProjects, setShowAllProjects] = useState(false)
+const [showAllServices, setShowAllServices] = useState(false)
+
 const [showContractPortfolio, setShowContractPortfolio] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
 const contactFormRef = useRef<HTMLDivElement>(null)
@@ -1202,7 +1204,7 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
       description="Focused electrical engineering execution, power distribution systems, wiring infrastructure, and compliant building installations for industrial and commercial projects."
     />
 
-    {/* GRID */}
+  {/* GRID */}
 <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
       {[
         {
@@ -1232,7 +1234,7 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
       ].map((service, i) => (
         <div
           key={i}
-          className="
+          className={`
             group relative overflow-hidden
             rounded-2xl border border-white/10
             bg-white/[0.03]
@@ -1241,7 +1243,8 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
             hover:-translate-y-1
             hover:border-[#0a84ff]/40
             hover:bg-white/[0.06]
-          "
+            ${i >= 3 && !showAllServices ? 'hidden sm:block' : ''}
+          `}
         >
 
           {/* glow effect */}
@@ -1268,6 +1271,24 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
         </div>
       ))}
 
+    </div>
+
+   {/* VIEW MORE BUTTON — mobile only */}
+    <div className="mt-6 flex justify-center sm:hidden">
+      <button
+        type="button"
+        onClick={() => {
+          const nextState = !showAllServices
+          setShowAllServices(nextState)
+          if (!nextState) {
+            document.getElementById('services')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }}
+        className="inline-flex items-center gap-2 rounded-full bg-[#0a84ff] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#1593ff]"
+      >
+        {showAllServices ? 'Show Less' : 'View More'}
+        <ArrowRight className={`h-4 w-4 transition-transform duration-300 ${showAllServices ? 'rotate-90' : ''}`} />
+      </button>
     </div>
   </div>
 </section>
@@ -1484,7 +1505,6 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
               </div>
             </Reveal>
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]"></div>
         
           </div>
         </section>
@@ -1503,8 +1523,7 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
     />
 
     {/* GRID */}
-<div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-       {/* LEFT SIDE */}
+<div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 items-start">       {/* LEFT SIDE */}
 <div className="flex flex-col gap-5 h-full">
 
   {/* SMALL STATUS CARD */}
