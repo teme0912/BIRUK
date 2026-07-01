@@ -633,8 +633,8 @@ advanced building electrical installations{' '}
     <div className="mt-8 hero-cta-wrap">
   <button
     type="button"
-    onClick={goToContact}
-className="
+ onClick={goToPhone}
+ className="
 inline-flex
 items-center
 justify-center
