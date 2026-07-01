@@ -500,25 +500,16 @@ className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-
 })}
 </div>
           
-          
-          <div className="hidden items-center gap-3 lg:flex">
-  <button
-    type="button"
-    onClick={() => {
-      const offset = contactFormRef.current?.getBoundingClientRect().top ?? 0
-      window.scrollBy({ top: offset - 80, behavior: 'smooth' })
-      setTimeout(() => {
-        setFormGlow(true)
-        contactFormRef.current?.querySelector('input')?.focus()
-        setTimeout(() => setFormGlow(false), 1500)
-      }, 600)
-    }}
+     <div className="hidden items-center gap-3 lg:flex">
+  
+   <a href="#contact"
     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(10,132,255,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#1593ff]"
   >
     Request Quote
     <ArrowRight className="h-4 w-4" />
-  </button>
-</div>
+  </a>
+</div>     
+          
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/85 transition hover:border-white/25 hover:bg-white/10 lg:hidden"
@@ -533,36 +524,30 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
         {mobileMenuOpen ? (
           <div className="border-t border-white/10 bg-[#090d15]/95 px-5 pb-5 pt-3 backdrop-blur-xl lg:hidden sm:px-8">
             <div className="mx-auto flex max-w-7xl flex-col gap-2">
-              {orderedNavLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10"
-                >
-                  {link.label}
-                </a>
-              ))}
-             <button
-  type="button"
-  onClick={() => {
-    setMobileMenuOpen(false)
-    setTimeout(() => {
-      const offset = contactFormRef.current?.getBoundingClientRect().top ?? 0
-      window.scrollBy({ top: offset - 80, behavior: 'smooth' })
+             {orderedNavLinks.map((link) => (
+  
+  <a  key={link.href}
+    href={link.href}
+    onClick={(e) => {
+      e.preventDefault()
+      setMobileMenuOpen(false)
+      const id = link.href.replace('#', '')
       setTimeout(() => {
-        setFormGlow(true)
-        contactFormRef.current?.querySelector('input')?.focus()
-        setTimeout(() => setFormGlow(false), 1500)
-      }, 600)
-    }, 300)
-  }}
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      }, 350)
+    }}
+    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10"
+  >
+    {link.label}
+  </a>
+))}
+        <a   href="#contact"
+  onClick={() => setMobileMenuOpen(false)}
   className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0a84ff] px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,132,255,0.3)]"
 >
   Request Quote
   <ArrowRight className="h-4 w-4" />
-</button>
-            </div>
+</a>     </div>
           </div>
         ) : null}
       </header>
