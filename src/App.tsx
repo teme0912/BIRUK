@@ -362,6 +362,7 @@ if (!values.email.trim()) {
     phone: formValues.phone,
   }
 })
+
 await emailjs.send(
   import.meta.env.VITE_EMAILJS_SERVICE,
   import.meta.env.VITE_EMAILJS_TEMPLATE,
@@ -373,9 +374,9 @@ await emailjs.send(
     project_type: formValues.projectType,
     message: formValues.message,
   },
-  import.meta.env.VITE_EMAILJS_PUBLIC
+  { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC }   
 );
-  // ✅ SUCCESS UI STATE
+  
   setFormStatus("success")
   setLoading(false)
   setIsSending(false)
@@ -409,7 +410,6 @@ await emailjs.send(
 
   setLoading(false)
 
-  // ❌ ERROR UI
   Swal.fire({
     icon: "error",
     title: "Message Failed",
@@ -1458,13 +1458,13 @@ id={`faq-button-${index}`}
 
                   <div className="quick-contact mt-6 flex flex-col sm:flex-row gap-3">
 <a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=temesgengodebo19@gmail.com"
+ href="https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
   target="_blank"
   rel="noopener noreferrer"
   className="flex-1 text-center border border-white/10 rounded-xl bg-white/5 px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#0a84ff] transition-all duration-300"
 >
   Email Us
-</a>                   
+</a>                 
 <a
   href="tel:+251911045505"
   className="flex-1 text-center border border-[#0a84ff]/30 rounded-xl bg-[#0a84ff]/10 text-[#7dd3fc] px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#0a84ff] hover:text-white transition-all duration-300"
