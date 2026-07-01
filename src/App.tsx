@@ -295,7 +295,33 @@ const [showContractPortfolio, setShowContractPortfolio] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
 const contactFormRef = useRef<HTMLDivElement>(null)
 const [formGlow, setFormGlow] = useState(false)  
+const phoneDetailsRef = useRef<HTMLDetailsElement>(null)
 
+const goToContact = () => {
+  const wasMenuOpen = mobileMenuOpen
+  setMobileMenuOpen(false)
+  setTimeout(() => {
+    const offset = contactFormRef.current?.getBoundingClientRect().top ?? 0
+    window.scrollBy({ top: offset - 80, behavior: 'smooth' })
+    setTimeout(() => {
+      setFormGlow(true)
+      contactFormRef.current?.querySelector('input')?.focus()
+      setTimeout(() => setFormGlow(false), 1500)
+    }, 600)
+  }, wasMenuOpen ? 300 : 0)
+}
+const goToPhone = () => {
+  const wasMenuOpen = mobileMenuOpen
+  setMobileMenuOpen(false)
+  setTimeout(() => {
+    const target = phoneDetailsRef.current
+    if (target) {
+      target.open = true
+      const offset = target.getBoundingClientRect().top ?? 0
+      window.scrollBy({ top: offset - 100, behavior: 'smooth' })
+    }
+  }, wasMenuOpen ? 300 : 0)
+}
   const validateForm = (values: ContactFormValues) => {
     const nextErrors: ContactFormErrors = {}
 
@@ -500,16 +526,17 @@ className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-
 })}
 </div>
           
-     <div className="hidden items-center gap-3 lg:flex">
-  
-   <a href="#contact"
+          
+          <div className="hidden items-center gap-3 lg:flex">
+  <button
+    type="button"
+onClick={goToPhone}
     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(10,132,255,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#1593ff]"
   >
     Request Quote
     <ArrowRight className="h-4 w-4" />
-  </a>
-</div>     
-          
+  </button>
+</div>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/85 transition hover:border-white/25 hover:bg-white/10 lg:hidden"
@@ -524,30 +551,25 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
         {mobileMenuOpen ? (
           <div className="border-t border-white/10 bg-[#090d15]/95 px-5 pb-5 pt-3 backdrop-blur-xl lg:hidden sm:px-8">
             <div className="mx-auto flex max-w-7xl flex-col gap-2">
-             {orderedNavLinks.map((link) => (
-  
-  <a  key={link.href}
-    href={link.href}
-    onClick={(e) => {
-      e.preventDefault()
-      setMobileMenuOpen(false)
-      const id = link.href.replace('#', '')
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-      }, 350)
-    }}
-    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10"
-  >
-    {link.label}
-  </a>
-))}
-        <a   href="#contact"
-  onClick={() => setMobileMenuOpen(false)}
+              {orderedNavLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10"
+                >
+                  {link.label}
+                </a>
+              ))}
+<button
+  type="button"
+  onClick={goToContact}
   className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0a84ff] px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,132,255,0.3)]"
 >
   Request Quote
   <ArrowRight className="h-4 w-4" />
-</a>     </div>
+</button>
+            </div>
           </div>
         ) : null}
       </header>
@@ -608,9 +630,10 @@ advanced building electrical installations{' '}
  safe, reliable, and efficient operation.
 </p>
 
-                <div className="mt-8 hero-cta-wrap">
-                  <a
-                    href="#contact"
+    <div className="mt-8 hero-cta-wrap">
+  <button
+    type="button"
+    onClick={goToContact}
 className="
 inline-flex
 items-center
@@ -630,10 +653,10 @@ hover:-translate-y-1
 hover:scale-105
 hover:bg-[#1593ff]
 "                  >
-                    Contact Us
-                    <PhoneCall className="h-4 w-4" />
-                  </a>
-                </div>
+    Contact Us
+    <PhoneCall className="h-4 w-4" />
+  </button>
+</div>
               </div>
             </div>
           </div>
@@ -1299,14 +1322,14 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
             <p className="relative mt-3 flex-1 text-xs leading-6 text-white/50">
               {product.desc}
             </p>
-
-           <a 
-              href="#contact"
-              className="relative mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2.5 text-xs font-bold text-[#7dd3fc] transition hover:bg-[#0a84ff] hover:text-white hover:border-[#0a84ff]"
-            >
-              Enquire / Order
-              <ArrowRight className="h-3.5 w-3.5" />
-            </a>
+<button
+  type="button"
+  onClick={goToContact}
+  className="relative mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-4 py-2.5 text-xs font-bold text-[#7dd3fc] transition hover:bg-[#0a84ff] hover:text-white hover:border-[#0a84ff]"
+>
+  Enquire / Order
+  <ArrowRight className="h-3.5 w-3.5" />
+</button>
           </div>
         </Reveal>
       ))}
@@ -1319,12 +1342,13 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
           <h3 className="mt-1 text-xl font-bold text-white">Need a full materials list for your project?</h3>
           <p className="mt-1 text-sm text-white/50">We handle procurement, import, and delivery. Request a quote with your BOQ.</p>
         </div>
-        
-         <a href="#contact"
-          className="shrink-0 inline-flex items-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] hover:-translate-y-1 hover:bg-[#1593ff] transition-all duration-300"
-        >
-          Request Quote <ArrowRight className="h-4 w-4" />
-        </a>
+        <button
+  type="button"
+  onClick={goToContact}
+  className="shrink-0 inline-flex items-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] hover:-translate-y-1 hover:bg-[#1593ff] transition-all duration-300"
+>
+  Request Quote <ArrowRight className="h-4 w-4" />
+</button>
       </div>
     </Reveal>
 
@@ -1537,9 +1561,9 @@ id={`faq-button-${index}`}
   <div className="grid gap-4">
 
     {/* PHONE DROPDOWN */}
-    <details className="group rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
+    <details ref={phoneDetailsRef} className="group rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
 
-      <summary className="flex cursor-pointer list-none items-center justify-between p-5 hover:bg-white/[0.04]">
+  <summary className="flex cursor-pointer list-none items-center justify-between p-5 hover:bg-white/[0.04]">
 
         <div className="flex items-center gap-4">
 
