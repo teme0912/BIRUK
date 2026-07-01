@@ -13,7 +13,6 @@ import {
   X,
 } from 'lucide-react'
 import { Reveal } from './components/Reveal'
-import { faqs } from './data'
 import type { ContactFormErrors, ContactFormValues } from './types'
 import './App.css'
 
@@ -212,11 +211,41 @@ const clientProjects = [
     totalAmount: 19258629.99,
   },
 ];
+
+const testimonials = [
+  {
+    quote: "Biruk Trading delivered our 1200 KVA transformer installation on time and passed all load tests on first attempt. Their panel integration was flawless.",
+    name: "Abebabwe",
+    role: "Project Manager",
+    company: "Bamacon Construction",
+    tag: "MINILIK HOSPITAL",
+  },
+  {
+    quote: "We trusted them with ACB control panels for the Lideta Admin Complex. Every feed above 1200A was safe, documented, and commissioned correctly.",
+    name: "Berhan",
+    role: "Project Manager",
+    company: "Bamacon Construction",
+    tag: "LIDETA COMPLEX",
+  },
+  {
+    quote: "The trauma center's electrical wiring and power distribution were completed with full compliance and zero downtime during handover.",
+    name: "Eyob",
+    role: "Project Manager",
+    company: "ETETE Construction",
+    tag: "ALERT TRAUMA CENTER",
+  },
+  {
+    quote: "Cinema complex wiring, MEP systems, and lighting infrastructure were delivered on schedule with excellent coordination.",
+    name: "Dereje",
+    role: "Project Manager",
+    company: "Bamacon Construction",
+    tag: "CINEMA COMPLEX",
+  },
+]
 function App() {
   const [activeSection, setActiveSection] = useState("home");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-const [activeFaq, setActiveFaq] = useState<number | null>(null)
 useEffect(() => {
   window.scrollTo({
     top: 0,
@@ -1410,94 +1439,53 @@ onClick={() => setSelectedCapability(isSelected ? null : item)}
        {/* --- TESTIMONIALS --- */}
   </div>
             </Reveal>
+ <Reveal delay={60}>
+              <div className="mt-12">
+                <p className="text-xs uppercase tracking-[0.32em] text-white/45">Testimonials</p>
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                  What Our <span className="text-[#7dd3fc]">Clients Say</span>
+                </h3>
+                <p className="mt-2 text-sm text-white/50">
+                  Real feedback from project managers, engineers, and site supervisors.
+                </p>
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-              <Reveal>
-                <div className="rounded-[2rem] border border-white/10 bg-white/[0.02] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-                  <p className="text-xs uppercase tracking-[0.32em] text-white/45">FAQ</p>
-                  <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white">Common project questions.</h3>
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {testimonials.map((t, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+                    >
+                      <div className="flex text-yellow-400 text-sm mb-3">
+                        {'★★★★★'}
+                      </div>
 
-                  <div className="mt-6 space-y-3">
-                    {faqs.map((faq, index) => {
-                      const isOpen = activeFaq === index
-                      return (
-                        <div key={faq.question} className="rounded-2xl border border-white/5 bg-black/30 overflow-hidden transition-all duration-300">
-                         <button
-  type="button"
-  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left hover:bg-white/5 transition-colors"
-  onClick={() => setActiveFaq(isOpen ? null : index)}
-  aria-expanded={isOpen}
-  aria-controls={`faq-${index}`}
->
-                            <span className="text-sm font-medium text-white/90 sm:text-base">{faq.question}</span>
-                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60">
-                              {isOpen ? '−' : '+'}
-                            </span>
-                          </button>
-                          <div
-                            className={`grid transition-all duration-300 ease-out ${isOpen ? 'grid-rows-[1fr] pb-4 opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
-                          >
-<div
-id={`faq-button-${index}`}
-  className="overflow-hidden px-5"
->
-                                <p className="text-sm leading-7 text-white/60 border-t border-white/5 pt-3">{faq.answer}</p>
-                            </div>
+                      <p className="text-sm text-white/70 leading-6 mb-4">
+                        {t.quote}
+                      </p>
+
+                      <div className="flex items-center justify-between gap-3 flex-wrap">
+                        <div className="flex items-center gap-3">
+                          <div className="h-9 w-9 shrink-0 rounded-full bg-[#0a84ff]/20 flex items-center justify-center text-xs font-bold text-[#7dd3fc]">
+                            {t.name.slice(0, 2).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">{t.name}</p>
+                            <p className="text-xs text-white/40">{t.role} · {t.company}</p>
                           </div>
                         </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </Reveal>
 
-              <Reveal delay={80}>
-                <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.02),rgba(10,132,255,0.05),rgba(16,185,129,0.02))] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-2xl border border-[#0a84ff]/25 bg-[#0a84ff]/12 p-3 text-[#7dd3fc]">
-                      <PhoneCall className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.32em] text-white/45">Need a quick answer?</p>
-                      <h3 className="mt-1 text-2xl font-semibold tracking-tight text-white">
-                        Share the scope, and we will take it from there.
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div className="quick-contact mt-6 flex flex-col sm:flex-row gap-3">
-<a
- href="https://mail.google.com/mail/?view=cm&fs=1&to=birukyisihak3@gmail.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex-1 text-center border border-white/10 rounded-xl bg-white/5 px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#0a84ff] transition-all duration-300"
->
-  Email Us
-</a>                 
-<a
-  href="tel:+251911045505"
-  className="flex-1 text-center border border-[#0a84ff]/30 rounded-xl bg-[#0a84ff]/10 text-[#7dd3fc] px-4 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#0a84ff] hover:text-white transition-all duration-300"
->
-  Call Representative
-</a>             
-                  </div>
-
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    {[
-                      { label: 'Technical clarity', value: 'Scope-first, B2B-friendly communication.' },
-                      { label: 'Delivery model', value: 'Flexible support across sourcing and site execution.' },
-                      { label: 'Industries', value: 'Education, hospitality, industrial, and commercial.' },
-                      { label: 'Response channel', value: 'Contact form, phone, or direct email inquiry.' },
-                    ].map((item) => (
-                      <div key={item.label} className="rounded-xl border border-white/5 bg-black/40 p-4">
-                        <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-[#0a84ff]">{item.label}</p>
-                        <p className="mt-2 text-xs leading-5 text-white/70">{item.value}</p>
+                        <span className="rounded-md border border-[#0a84ff]/30 bg-[#0a84ff]/10 px-2 py-1 text-[10px] font-bold text-[#7dd3fc]">
+                          {t.tag}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              </Reveal>
-            </div>
+              </div>
+            </Reveal>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]"></div>
+        
           </div>
         </section>
  
