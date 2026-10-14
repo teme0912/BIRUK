@@ -215,14 +215,14 @@ const clientProjects = [
 const testimonials = [
   {
     quote: "Biruk Trading delivered our 1200 KVA transformer installation on time and passed all load tests on first attempt. Their panel integration was flawless.",
-    name: "Abebabwe",
+    name: "Abebaw",
     role: "Project Manager",
     company: "Bamacon Construction",
     tag: "MINILIK HOSPITAL",
   },
   {
     quote: "We trusted them with ACB control panels for the Lideta Admin Complex. Every feed above 1200A was safe, documented, and commissioned correctly.",
-    name: "Berhan",
+    name: "Birhan",
     role: "Project Manager",
     company: "Bamacon Construction",
     tag: "LIDETA COMPLEX",
