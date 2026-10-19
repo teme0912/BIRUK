@@ -525,9 +525,9 @@ className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-
     duration-300
     truncate
     leading-tight
-  ">BIRUK YISHAK</span>
+  ">BIRUK YISIHAK</span>
   <span className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7dd3fc]/60 leading-tight">
-     GENERAL ELECTRICAL INSTALLATION WORK COMPANY
+     GENERAL ELECTRICAL INSTALLATION WORKS COMPANY
   </span>
 </span>
 
