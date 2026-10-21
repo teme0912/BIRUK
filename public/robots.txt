@@ -1,0 +1,4 @@
+   User-agent: *
+   Allow: /
+
+   Sitemap: https://biruk-electrical-website.web.app/sitemap.xml
