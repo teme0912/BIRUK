@@ -1899,25 +1899,6 @@ hover:bg-[#1593ff]
   )
 }
 
-interface SectionHeadingProps {
-  eyebrow: string
-  title: string
-  description: string
-  primaryId?: string
-}
-
-function SectionHeading({ eyebrow, title, description, primaryId }: SectionHeadingProps) {
-  return (
-    <div className="max-w-4xl" id={primaryId}>
-      <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">{eyebrow}</p>
-      <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-        {title}
-      </h2>
-      <p className="mt-4 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">{description}</p>
-    </div>
-  )
-}
-
 interface FieldLabelProps {
   text: string
   error?: string
