@@ -973,9 +973,10 @@ hover:bg-[#1593ff]
     {/* PROJECTS GRID */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {(showAllProjects ? portfolioProjects : portfolioProjects.slice(0, 3)).map((project, index) => (
-        <Reveal key={project.id} delay={index * 80}>
-          <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_30px_80px_rgba(10,132,255,0.2)]">
-
+<Reveal key={project.id} delay={index >= 3 ? (index - 3) * 80 : index * 80}><div
+  id={index === 3 ? 'project-4' : undefined}
+  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_30px_80px_rgba(10,132,255,0.2)] scroll-mt-28"
+>
             {/* IMAGE */}
             <div className="relative aspect-[16/10] w-full overflow-hidden">
               <img
@@ -1032,33 +1033,45 @@ hover:bg-[#1593ff]
       ))}
     </div>
 
-    {/* BUTTONS */}
-    <div className="mt-12 flex flex-col items-center gap-4">
+   {/* BUTTONS */}
+<div className="mt-12 flex flex-col items-center gap-4">
 
-      <button
-        onClick={() => {
-          const nextState = !showAllProjects
-          setShowAllProjects(nextState)
-          if (!nextState) setShowContractPortfolio(false)
+  {/* 1. EXPLORE FULL PORTFOLIO (top) */}
+  <button
+    type="button"
+    onClick={() => {
+      const nextState = !showAllProjects
+      setShowAllProjects(nextState)
+
+      if (!nextState) {
+        // Collapsing: go back to the top of the Projects section
+        setTimeout(() => {
           document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }}
-        className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white shadow-[0_15px_40px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(10,132,255,0.45)]"
-      >
-        {showAllProjects ? 'Show Featured Only' : 'Explore Full Portfolio'}
-        <ArrowRight className={`h-4 w-4 transition-all duration-300 ${showAllProjects ? 'rotate-180' : 'group-hover:translate-x-1'}`} />
-      </button>
+        }, 50)
+      } else {
+        // Expanding: start at project 04, the first new card
+        setTimeout(() => {
+          document.getElementById('project-4')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
+      }
+    }}
+    className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#0a84ff]/40 bg-[#0a84ff] px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white shadow-[0_15px_40px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(10,132,255,0.45)]"
+  >
+    {showAllProjects ? 'Show Featured Only' : 'Explore Full Portfolio'}
+    <ArrowRight className={`h-4 w-4 transition-all duration-300 ${showAllProjects ? 'rotate-180' : 'group-hover:translate-x-1'}`} />
+  </button>
 
-      {showAllProjects && (
-        <button
-          type="button"
-          onClick={() => setShowContractPortfolio(prev => !prev)}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 transition-all duration-300 hover:border-[#0a84ff]/40 hover:text-white"
-        >
-          {showContractPortfolio ? 'Hide Contract Portfolio' : 'View Contract Portfolio'}
-          <ArrowRight className="h-4 w-4" />
-        </button>
-      )}
-    </div>
+  {/* 2. VIEW CONTRACT PORTFOLIO (below, always visible) */}
+  <button
+    type="button"
+    onClick={() => setShowContractPortfolio(prev => !prev)}
+    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/70 transition-all duration-300 hover:border-[#0a84ff]/40 hover:text-white"
+  >
+    {showContractPortfolio ? 'Hide Contract Portfolio' : 'View Contract Portfolio'}
+    <ArrowRight className="h-4 w-4" />
+  </button>
+
+</div>
 
     {/* CONTRACT PORTFOLIO TABLE */}
     {showContractPortfolio && (
