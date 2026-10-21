@@ -1132,11 +1132,22 @@ hover:bg-[#1593ff]
 >
   <div className="mx-auto max-w-7xl">
 
-    <SectionHeading
-      eyebrow=""
-      title="Our Core Services"
-      description="Focused electrical engineering execution, power distribution systems, wiring infrastructure, and compliant building installations for industrial and commercial projects."
-    />
+  <Reveal>
+  <div className="flex flex-col gap-2">
+    <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
+      What We Do
+    </span>
+    <h2 className="text-4xl font-black text-white sm:text-5xl">
+      Our{' '}
+      <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
+        Core Services
+      </span>
+    </h2>
+    <p className="mt-2 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">
+      Focused electrical engineering execution, power distribution systems, wiring infrastructure, and compliant building installations for industrial and commercial projects.
+    </p>
+  </div>
+</Reveal>
 
   {/* GRID */}
 <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
@@ -1343,11 +1354,22 @@ hover:bg-[#1593ff]
         
           <div className="mx-auto max-w-7xl">
             <Reveal>
-              <SectionHeading
-                eyebrow=""
-                title="Live Operations Ticker"
-                description="The horizontal dynamic viewport provides persistent reference points of municipal, high-voltage, and hospital systems engineering workflows."
-              />
+              <Reveal>
+  <div className="flex flex-col gap-2">
+    <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
+      Our Operations
+    </span>
+    <h2 className="text-4xl font-black text-white sm:text-5xl">
+      Live{' '}
+      <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
+        Operations Ticker
+      </span>
+    </h2>
+    <p className="mt-2 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">
+      The horizontal dynamic viewport provides persistent reference points of municipal, high-voltage, and hospital systems engineering workflows.
+    </p>
+  </div>
+</Reveal>
             </Reveal>
 
             <Reveal delay={80}>
@@ -1450,11 +1472,22 @@ hover:bg-[#1593ff]
 >
   <div className="mx-auto max-w-7xl">
 
-    <SectionHeading
-      eyebrow=""
-      title="Let’s Build Something Powerful"
-      description="Share your project scope and we’ll respond with technical guidance, cost estimation, or full execution plan."
-    />
+    <Reveal>
+  <div className="flex flex-col gap-2">
+    <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
+      Get In Touch
+    </span>
+    <h2 className="text-4xl font-black text-white sm:text-5xl">
+      Let’s Build{' '}
+      <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
+        Something Powerful
+      </span>
+    </h2>
+    <p className="mt-2 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">
+      Share your project scope and we’ll respond with technical guidance, cost estimation, or full execution plan.
+    </p>
+  </div>
+</Reveal>
 
     {/* GRID */}
 <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 items-stretch">
