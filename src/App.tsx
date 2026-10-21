@@ -712,7 +712,7 @@ hover:bg-[#1593ff]
         </h2>
         <p className="text-lg leading-9 text-white/80 sm:text-xl">
           <span className="font-bold text-white">Powering Ethiopia's most critical buildings.</span>{' '}
-          Since 2010, <span className="font-semibold text-white">Biruk Trading &amp; Engineering</span>{' '}
+          Since 2018, <span className="font-semibold text-white">Biruk Trading &amp; Engineering</span>{' '}
           has designed, supplied, installed, and commissioned safe, reliable, and code-compliant
           electrical power systems for hospitals, government complexes, universities, and urban
           infrastructure across Ethiopia.
