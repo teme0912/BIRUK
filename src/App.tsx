@@ -1150,32 +1150,38 @@ hover:bg-[#1593ff]
 
   {/* GRID */}
 <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-      {[
-        {
-          title: "Power Distribution Systems",
-          desc: "Design and execution of safe and stable electrical power distribution networks for buildings and industrial facilities.",
-        },
-        {
-          title: "Electrical Wiring Installation",
-          desc: "Complete internal and external wiring systems aligned with international building electrical standards and safety codes.",
-        },
-        {
-          title: "Building Electrical Compliance",
-          desc: "Ensuring all installations follow approved electrical building codes, safety regulations, and inspection requirements.",
-        },
-        {
-          title: "Electrical Material Supply",
-          desc: "Provision of certified electrical components, cables, breakers, panels, and distribution accessories for projects.",
-        },
-        {
-          title: "Site Installation Support",
-          desc: "On-site supervision and support for electrical installation, routing, and system setup during construction phases.",
-        },
-        {
-          title: "System Testing & Verification",
-          desc: "Basic electrical testing, continuity checks, and functional verification before system activation.",
-        }
-      ].map((service, i) => (
+     {[
+  {
+    title: "Power Distribution Systems",
+    desc: "Design and execution of safe and stable electrical power distribution networks for buildings and industrial facilities.",
+    accent: "#60a5fa", // blue
+  },
+  {
+    title: "Electrical Wiring Installation",
+    desc: "Complete internal and external wiring systems aligned with international building electrical standards and safety codes.",
+    accent: "#7dd3fc", // sky
+  },
+  {
+    title: "Building Electrical Compliance",
+    desc: "Ensuring all installations follow approved electrical building codes, safety regulations, and inspection requirements.",
+    accent: "#34d399", // emerald
+  },
+  {
+    title: "Electrical Material Supply",
+    desc: "Provision of certified electrical components, cables, breakers, panels, and distribution accessories for projects.",
+    accent: "#fbbf24", // amber
+  },
+  {
+    title: "Site Installation Support",
+    desc: "On-site supervision and support for electrical installation, routing, and system setup during construction phases.",
+    accent: "#a78bfa", // violet
+  },
+  {
+    title: "System Testing & Verification",
+    desc: "Basic electrical testing, continuity checks, and functional verification before system activation.",
+    accent: "#2dd4bf", // teal
+  }
+].map((service, i) => (
         <div
           key={i}
           className={`
@@ -1197,9 +1203,12 @@ hover:bg-[#1593ff]
           {/* ICON */}
           <div className="relative flex items-center gap-3">
 
-            <h3 className="text-base font-semibold text-white group-hover:text-[#0a84ff] transition">
-              {service.title}
-            </h3>
+           <h3
+  className="text-base font-semibold transition duration-300 group-hover:brightness-125"
+  style={{ color: service.accent }}
+>
+  {service.title}
+</h3>
           </div>
 
           {/* DESCRIPTION */}
@@ -1209,8 +1218,10 @@ hover:bg-[#1593ff]
 
           {/* bottom line */}
           <div className="relative mt-6 h-[1px] w-full bg-white/5 overflow-hidden">
-            <div className="h-full w-0 group-hover:w-full transition-all duration-500 bg-[#0a84ff]" />
-          </div>
+<div
+  className="h-full w-0 group-hover:w-full transition-all duration-500"
+  style={{ backgroundColor: service.accent }}
+/>          </div>
 
         </div>
       ))}
@@ -1865,7 +1876,7 @@ className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl borde
             <div className="flex flex-col gap-3">
 
   <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981] bg-clip-text text-transparent">
-    BIRUK
+    BIRUK YISIHAK
   </h2>
   <p className="text-xs sm:text-sm font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[#7dd3fc]/80">
     Founder & Managing Director
@@ -1879,7 +1890,7 @@ className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl borde
   <p className="text-sm text-white/50">
     © 2026
     <span className="font-semibold text-[#7dd3fc]">
-      {" "}Biruk Trading & Engineering
+      {" "}Biruk GENERAL ELECTRICAL INSTALLATION WORKS COMPANY
     </span>.
     All rights reserved.
   </p>
