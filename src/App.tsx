@@ -253,8 +253,7 @@ useEffect(() => {
   })
 }, [])
 useEffect(() => {
-  document.title = "Biruk Trading & Engineering | Electrical & Electromechanical Services"
-
+document.title = "Biruk Electrical Website | Biruk Trading & Engineering, Ethiopia"
   const meta = document.querySelector("meta[name='description']")
   if (meta) {
     meta.setAttribute(
@@ -1354,19 +1353,19 @@ hover:bg-[#1593ff]
         
           <div className="mx-auto max-w-7xl">
             <Reveal>
-              <Reveal>
+             <Reveal>
   <div className="flex flex-col gap-2">
     <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#0a84ff]">
       Our Operations
     </span>
     <h2 className="text-4xl font-black text-white sm:text-5xl">
-      Live{' '}
+      Project{' '}
       <span className="bg-gradient-to-r from-[#0a84ff] to-[#7dd3fc] bg-clip-text text-transparent">
-        Operations Ticker
+        Gallery
       </span>
     </h2>
     <p className="mt-2 max-w-3xl text-sm leading-7 text-white/60 sm:text-base">
-      The horizontal dynamic viewport provides persistent reference points of municipal, high-voltage, and hospital systems engineering workflows.
+      A look at our electrical installation work across hospitals, government buildings, universities, and city infrastructure in Ethiopia.
     </p>
   </div>
 </Reveal>
@@ -1588,11 +1587,11 @@ hover:bg-[#1593ff]
     </details>
 
     {/* TELEGRAM */}
-
-    <a
-      className="group flex flex-1 items-center rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
-    >
-
+<a
+  href="https://t.me/Biruk002"
+  target="_blank"
+  rel="noopener noreferrer"
+className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition">
       <div className="flex items-center gap-4">
 
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
@@ -1619,9 +1618,8 @@ hover:bg-[#1593ff]
       href="https://www.linkedin.com/in/biruk-yisihak/"
       target="_blank"
       rel="noopener noreferrer"
-      className="group rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
-    >
-      <div className="flex items-center gap-4">
+className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
+    >      <div className="flex items-center gap-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0a84ff]/15">
           <FaLinkedin className="h-5 w-5 text-[#7dd3fc]" />
         </div>
@@ -1644,8 +1642,7 @@ hover:bg-[#1593ff]
       href="https://www.google.com/maps/search/?api=1&query=British+Embassy+Addis+Ababa+Comoros+Street"
       target="_blank"
       rel="noopener noreferrer"
-      className="group rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"
-    >
+className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#0a84ff]/40 transition"    >
 
       <div className="flex items-center gap-4">
 
