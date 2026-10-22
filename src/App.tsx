@@ -242,6 +242,15 @@ const testimonials = [
     tag: "CINEMA COMPLEX",
   },
 ]
+const academicRecords = {
+  institution: 'Addis Ababa Tegbareid Polytechnic College',
+  program: 'Building Electrical Installation (Level IV Extension)',
+  period: 'Oct 31, 2022 – Aug 29, 2025 G.C',
+  documents: [
+    { title: 'Official Academic Transcript', tag: 'Technical Training Record', file: '/aca2.jpg' },
+    { title: 'Level IV Training Certificate', tag: 'Building Electrical Installation', file: '/aca1.jpg' },
+  ],
+}
 function App() {
   const [activeSection, setActiveSection] = useState("home");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -320,7 +329,7 @@ useEffect(() => {
 const [selectedCapability, setSelectedCapability] = useState<string | null>(null)  
 const [showAllProjects, setShowAllProjects] = useState(false)
 const [showAllServices, setShowAllServices] = useState(false)
-
+const [showAllProducts, setShowAllProducts] = useState(false)
 const [showContractPortfolio, setShowContractPortfolio] = useState(false)
 const [selectedCredential, setSelectedCredential] = useState<string | null>(null)
 const contactFormRef = useRef<HTMLDivElement>(null)
@@ -886,7 +895,83 @@ hover:bg-[#1593ff]
         </div>
       </div>
     </Reveal>
+    {/* --- ACADEMIC STATUS --- */}
+    <Reveal>
+      <div className="mt-5 relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 backdrop-blur-xl">
+        <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981]" />
 
+              {/* HEADER */}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
+              Technical Qualifications
+            </p>
+            <h3 className="mt-1 text-2xl font-bold text-white sm:text-3xl">
+              Certified Engineering Training
+            </h3>
+            <p className="mt-2 text-sm text-white/50">
+              Our technical team is formally trained in building electrical installation.
+            </p>
+          </div>
+          <div className="w-fit rounded-full border border-[#10b981]/30 bg-[#10b981]/10 px-4 py-1.5 text-xs font-bold text-[#10b981]">
+            ✓ Level IV Qualified
+          </div>
+        </div>
+
+        {/* STATS */}
+  
+        {/* PROGRAM INFO */}
+        <div className="mt-0 grid grid-cols-1 gap-3 sm:grid-cols-2">          <div className="rounded-2xl border border-white/5 bg-black/20 px-5 py-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7dd3fc]">Program</p>
+            <p className="mt-1 text-sm text-white/80">{academicRecords.program}</p>
+          </div>
+          <div className="rounded-2xl border border-white/5 bg-black/20 px-5 py-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7dd3fc]">Duration</p>
+            <p className="mt-1 text-sm text-white/80">{academicRecords.period}</p>
+          </div>
+        </div>
+
+        {/* DOCUMENT CARDS */}
+        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+          {academicRecords.documents.map((doc) => (
+            <div
+              key={doc.title}
+              className="group overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 transition-all duration-500 hover:-translate-y-1 hover:border-[#0a84ff]/40 hover:shadow-[0_20px_60px_rgba(10,132,255,0.18)]"
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedCredential(doc.file)}
+                className="relative block aspect-[16/10] w-full overflow-hidden"
+                aria-label={`View ${doc.title}`}
+              >
+                <img
+                  src={doc.file}
+                  alt={doc.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1527] via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 rounded-xl border border-white/10 bg-[#090d15]/80 px-3 py-1.5 text-[0.6rem] font-bold uppercase tracking-widest text-[#7dd3fc] backdrop-blur-md">
+                  {doc.tag}
+                </span>
+              </button>
+
+              <div className="flex items-center justify-between gap-3 p-5">
+                <h4 className="text-sm font-bold text-white">{doc.title}</h4>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCredential(doc.file)}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#0a84ff] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#158dff]"
+                >
+                  View
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Reveal>
     <Reveal>
       <div className="mt-5 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0a84ff]/8 via-white/[0.02] to-[#10b981]/5 p-8 backdrop-blur-xl">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -1308,8 +1393,11 @@ hover:bg-[#1593ff]
           badgeColor: 'text-[#7dd3fc] border-[#0a84ff]/30 bg-[#0a84ff]/10',
         },
       ].map((product, i) => (
-        <Reveal key={i} delay={i * 60}>
-          <div className="group relative flex flex-col h-full rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_20px_60px_rgba(10,132,255,0.15)]">
+        <Reveal
+          key={i}
+          delay={i * 60}
+          className={i >= 3 && !showAllProducts ? 'hidden sm:block' : ''}
+        >          <div className="group relative flex flex-col h-full rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_20px_60px_rgba(10,132,255,0.15)]">
             <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-[#0a84ff]/8 via-transparent to-[#10b981]/5" />
 
             <div className="relative flex items-start justify-between mb-4">
@@ -1339,7 +1427,22 @@ hover:bg-[#1593ff]
         </Reveal>
       ))}
     </div>
-
+<div className="mt-8 flex justify-center sm:hidden">
+      <button
+        type="button"
+        onClick={() => {
+          const next = !showAllProducts
+          setShowAllProducts(next)
+          if (!next) {
+            document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }}
+        className="inline-flex items-center gap-2 rounded-full bg-[#0a84ff] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(10,132,255,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#1593ff]"
+      >
+        {showAllProducts ? 'Show Less' : 'View More'}
+        <ArrowRight className={`h-4 w-4 transition-transform duration-300 ${showAllProducts ? 'rotate-90' : ''}`} />
+      </button>
+    </div>
     <Reveal delay={100}>
       <div className="mt-10 rounded-3xl border border-[#0a84ff]/20 bg-gradient-to-br from-[#0a84ff]/8 to-transparent p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
