@@ -262,7 +262,7 @@ useEffect(() => {
   })
 }, [])
 useEffect(() => {
-document.title = "Biruk Electrical Website | Biruk Trading & Engineering, Ethiopia"
+document.title = "Biruk Electrical Installation"
   const meta = document.querySelector("meta[name='description']")
   if (meta) {
     meta.setAttribute(
@@ -657,16 +657,8 @@ For Critical Infrastructure
   </span>
 
 </div>
-               <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white">
-  We specialize in{' '}
-advanced building electrical installations{' '}
-  premium material supply{' '}
-  precision testing and{' '}
-  certified commissioning services.{' '}
-  From heavy industrial infrastructure to commercial complexes, we deliver{' '}
-  high-quality engineering systems{' '}
-  designed for{' '}
- safe, reliable, and efficient operation.
+          <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
+  We design, install, test, and commission electrical systems for industrial and commercial projects, and supply the quality materials to build them. Every system we deliver is built for safe, reliable, and efficient operation.
 </p>
 
     <div className="mt-8 hero-cta-wrap">
