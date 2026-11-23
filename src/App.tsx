@@ -616,23 +616,25 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
       <main className="main-with-fixed-header">
         {/* --- HOME SECTION --- */}
         <section id="home" className="home-hero px-4 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10 lg:pt-32 relative overflow-hidden min-h-[80vh] sm:min-h-[85vh] flex items-center">
+         <div className="hero-grid absolute inset-0 z-0" aria-hidden="true" />
          <div className="absolute inset-0 z-0">
   <img
     src="/spencerwing-power-plant-2840909_1920.jpg"
-    alt="Home Background"
-    className="h-full w-full object-cover object-center brightness-110 contrast-105"
+    alt=""
+    className="hero-background h-full w-full object-cover object-center brightness-110 contrast-105"
   />
 </div>
 
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="py-12 sm:py-16 lg:py-20">
               <div className="max-w-4xl hero-content">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-white mb-4 sm:mb-6">
-  <Sparkles className="h-4 w-4" />
-  Where expertise meets dedication
-</div>
+                <div className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-white mb-4 sm:mb-6">
+                  <span className="hero-status-dot" />
+                  <Sparkles className="h-4 w-4 text-[#7dd3fc]" />
+                  Engineering systems that keep Ethiopia moving
+                </div>
 
-<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
+<h1 className="hero-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
 Engineering Excellence
 <br />
 <span className="text-[#7dd3fc]">
@@ -657,7 +659,7 @@ For Critical Infrastructure
   </span>
 
 </div>
-          <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
+          <p className="mt-5 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white/85 [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
   We design, install, test, and commission electrical systems for industrial and commercial projects, and supply the quality materials to build them. Every system we deliver is built for safe, reliable, and efficient operation.
 </p>
 
@@ -687,7 +689,19 @@ hover:bg-[#1593ff]
     Contact Us
     <PhoneCall className="h-4 w-4" />
   </button>
+  <a
+    href="#projects"
+    className="hero-secondary-cta inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white"
+  >
+    Explore our work
+    <ArrowRight className="h-4 w-4" />
+  </a>
 </div>
+                <div className="hero-trust-line mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span><strong className="text-white">8+</strong> years of delivery</span>
+                  <span><strong className="text-white">1200 KVA</strong> systems</span>
+                  <span>Built for reliability</span>
+                </div>
               </div>
             </div>
           </div>
