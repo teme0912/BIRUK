@@ -11,8 +11,11 @@ import {
   PhoneCall,
   Sparkles,
   X,
+  Sun,
+  Moon,
 } from 'lucide-react'
 import { Reveal } from './components/Reveal'
+import { useTheme } from './hooks/useTheme'
 import type { ContactFormErrors, ContactFormValues } from './types'
 import './App.css'
 
@@ -255,6 +258,7 @@ function App() {
   const [activeSection, setActiveSection] = useState("home");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { theme, toggle } = useTheme()
 useEffect(() => {
   window.scrollTo({
     top: 0,
@@ -498,8 +502,8 @@ useEffect(() => {
   ]
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#090d15] text-white selection:bg-[#0a84ff] selection:text-white">
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div className="app-shell relative min-h-screen overflow-x-hidden bg-[#090d15] text-white selection:bg-[#0a84ff] selection:text-white">
+      <div className="site-ambient pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute left-[-10%] top-[-20%] h-96 w-96 rounded-full bg-[#0a84ff]/18 blur-3xl" />
         <div className="absolute right-[-5%] top-[10%] h-[32rem] w-[32rem] rounded-full bg-[#10b981]/10 blur-3xl" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_30%),linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent_18%)]" />
@@ -540,7 +544,7 @@ className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-
 </span>
 
 </a>
-<div className="hidden items-center gap-2 lg:flex">
+<div className="desktop-navigation hidden items-center gap-2 lg:flex">
 {orderedNavLinks.map((link) => {
   const isActive = activeSection === link.href.replace("#", "");
 
@@ -569,6 +573,16 @@ className="h-9 w-9 sm:h-12 sm:w-12 object-contain transition duration-300 group-
           <div className="hidden items-center gap-3 lg:flex">
   <button
     type="button"
+    className="theme-toggle"
+    onClick={toggle}
+    aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+    title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+  >
+    {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+  </button>
+  <button
+    type="button"
 onClick={goToPhone}
     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a84ff] px-7 py-4 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(10,132,255,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#1593ff]"
   >
@@ -588,7 +602,7 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
         </nav>
 
         {mobileMenuOpen ? (
-          <div className="border-t border-white/10 bg-[#090d15]/95 px-5 pb-5 pt-3 backdrop-blur-xl lg:hidden sm:px-8">
+          <div className="mobile-navigation border-t border-white/10 bg-[#090d15]/95 px-5 pb-5 pt-3 backdrop-blur-xl lg:hidden sm:px-8">
             <div className="mx-auto flex max-w-7xl flex-col gap-2">
               {orderedNavLinks.map((link) => (
                 <a
@@ -600,6 +614,15 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
                   {link.label}
                 </a>
               ))}
+<button
+  type="button"
+  className="theme-toggle w-full"
+  onClick={toggle}
+  aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+>
+  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+  <span>{theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
+</button>
 <button
   type="button"
   onClick={goToContact}
@@ -616,50 +639,48 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
       <main className="main-with-fixed-header">
         {/* --- HOME SECTION --- */}
         <section id="home" className="home-hero px-4 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10 lg:pt-32 relative overflow-hidden min-h-[80vh] sm:min-h-[85vh] flex items-center">
-         <div className="hero-grid absolute inset-0 z-0" aria-hidden="true" />
          <div className="absolute inset-0 z-0">
   <img
     src="/spencerwing-power-plant-2840909_1920.jpg"
-    alt=""
-    className="hero-background h-full w-full object-cover object-center brightness-110 contrast-105"
+    alt="Home Background"
+    className="h-full w-full object-cover object-center brightness-110 contrast-105"
   />
 </div>
 
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="py-12 sm:py-16 lg:py-20">
               <div className="max-w-4xl hero-content">
-                <div className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-white mb-4 sm:mb-6">
-                  <span className="hero-status-dot" />
-                  <Sparkles className="h-4 w-4 text-[#7dd3fc]" />
-                  Engineering systems that keep Ethiopia moving
-                </div>
+                <div className="hero-eyebrow inline-flex items-center gap-2 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.3em] mb-4 sm:mb-6">
+  <Sparkles className="h-4 w-4" />
+  Where expertise meets dedication
+</div>
 
-<h1 className="hero-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
+<h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
 Engineering Excellence
 <br />
-<span className="text-[#7dd3fc]">
+<span className="text-[#7dd3fc] whitespace-nowrap">
 For Critical Infrastructure
 </span>
 </h1><div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
 
-  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
+  <span className="hero-service-pill rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Electrical Installation
   </span>
 
-  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
+  <span className="hero-service-pill rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Electrical Material Supply
   </span>
 
-  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
+  <span className="hero-service-pill rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Power Distribution
   </span>
 
-  <span className="rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
+  <span className="hero-service-pill rounded-2xl sm:rounded-full border border-[#7dd3fc]/70 bg-[#0a84ff]/30 px-4 py-3 sm:py-2 text-xs font-black text-white text-center shadow-[0_0_16px_rgba(10,132,255,0.5)] backdrop-blur-sm w-full sm:w-auto">
     Testing & Commissioning
   </span>
 
 </div>
-          <p className="mt-5 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white/85 [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
+          <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
   We design, install, test, and commission electrical systems for industrial and commercial projects, and supply the quality materials to build them. Every system we deliver is built for safe, reliable, and efficient operation.
 </p>
 
@@ -689,19 +710,17 @@ hover:bg-[#1593ff]
     Contact Us
     <PhoneCall className="h-4 w-4" />
   </button>
-  <a
-    href="#projects"
-    className="hero-secondary-cta inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white"
-  >
-    Explore our work
-    <ArrowRight className="h-4 w-4" />
-  </a>
 </div>
-                <div className="hero-trust-line mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium uppercase tracking-[0.18em] text-white/55">
-                  <span><strong className="text-white">8+</strong> years of delivery</span>
-                  <span><strong className="text-white">1200 KVA</strong> systems</span>
-                  <span>Built for reliability</span>
-                </div>
+  <div className="hero-credentials" aria-label="Professional qualifications">
+    <div>
+      <span>2025 Graduate</span>
+      <strong>AAU 5 Kilo · Power &amp; Control (Electrical) Engineering</strong>
+    </div>
+    <div>
+      <span>Level 5 Graduate</span>
+      <strong>AA Tegbarid College · Building Electrical Engineering</strong>
+    </div>
+  </div>
               </div>
             </div>
           </div>
@@ -732,6 +751,21 @@ hover:bg-[#1593ff]
           electrical power systems for hospitals, government complexes, universities, and urban
           infrastructure across Ethiopia.
         </p>
+      </div>
+    </Reveal>
+
+    <Reveal>
+      <div className="education-panel mb-5 grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-[#0a84ff]/20 sm:grid-cols-2">
+        <div className="education-card p-5 sm:p-7">
+          <span className="education-kicker">Higher Education · Class of 2025</span>
+          <h3>Power &amp; Control Engineering</h3>
+          <p>Addis Ababa University · 5 Kilo Campus</p>
+        </div>
+        <div className="education-card p-5 sm:p-7">
+          <span className="education-kicker">Vocational Qualification · Level 5</span>
+          <h3>Building Electrical Engineering</h3>
+          <p>Addis Ababa Tegbarid College</p>
+        </div>
       </div>
     </Reveal>
 
@@ -776,10 +810,10 @@ hover:bg-[#1593ff]
             ].map((item, i) => (
               <div key={item.step} className="flex items-start gap-3">
                 <div className="flex flex-col items-center">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#0a84ff]/20 bg-[#0a84ff]/15 text-xs font-black text-[#7dd3fc]">
+                  <span className="process-step flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-black">
                     {item.step}
                   </span>
-                  {i < 3 && <div className="mt-1 h-3 w-px bg-white/10" />}
+                  {i < 3 && <div className="process-line mt-1 h-3 w-px" />}
                 </div>
                 <div className="pb-1">
                   <p className="text-sm font-semibold text-white">{item.title}</p>
@@ -818,10 +852,11 @@ hover:bg-[#1593ff]
                   <span className="flex items-center justify-between gap-2">
                     <span className="flex items-center gap-2">
                       <span
+                        aria-hidden="true"
                         className={`h-2 w-2 shrink-0 rounded-full transition-all duration-300 ${
                           isSelected
-                            ? 'bg-[#0a84ff] shadow-[0_0_6px_rgba(10,132,255,0.8)]'
-                            : 'bg-white/20 group-hover:bg-[#0a84ff]/50'
+                            ? 'capability-dot selected'
+                            : 'capability-dot'
                         }`}
                       />
                       {item}
@@ -1065,7 +1100,7 @@ hover:bg-[#1593ff]
       {(showAllProjects ? portfolioProjects : portfolioProjects.slice(0, 3)).map((project, index) => (
 <Reveal key={project.id} delay={index >= 3 ? (index - 3) * 80 : index * 80}><div
   id={index === 3 ? 'project-4' : undefined}
-  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_30px_80px_rgba(10,132,255,0.2)] scroll-mt-28"
+  className="project-card group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d1527]/60 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[#0a84ff]/40 hover:shadow-[0_30px_80px_rgba(10,132,255,0.2)] scroll-mt-28"
 >
             {/* IMAGE */}
             <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -1166,7 +1201,7 @@ hover:bg-[#1593ff]
     {/* CONTRACT PORTFOLIO TABLE */}
     {showContractPortfolio && (
       <Reveal>
-        <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
+        <div className="contract-table mt-10 rounded-3xl border border-white/10 bg-white/[0.03] overflow-hidden">
 
           <div className="px-4 sm:px-8 py-5 sm:py-6 border-b border-white/10">
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">
@@ -1197,7 +1232,7 @@ hover:bg-[#1593ff]
                     <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-white/70">{item.project}</td>
                     <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-white/50">{item.client}</td>
                     <td className="px-3 sm:px-6 py-3 sm:py-4">
-                      <span className="rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1 text-xs font-bold text-[#7dd3fc]">
+                      <span className="contract-value rounded-lg border border-[#0a84ff]/20 bg-[#0a84ff]/10 px-3 py-1 text-xs font-bold text-[#7dd3fc]">
                         ETB {item.totalAmount.toLocaleString()}
                       </span>
                     </td>
@@ -1990,7 +2025,6 @@ className="group flex flex-1 basis-0 min-h-[96px] items-center rounded-3xl borde
   <p className="text-xs sm:text-sm font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[#7dd3fc]/80">
     Founder & Managing Director
   </p>
-
   <div className="flex items-center gap-2">
     <div className="h-[2px] w-16 rounded-full bg-gradient-to-r from-[#0a84ff] to-[#10b981]" />
     
@@ -2025,7 +2059,7 @@ interface FieldLabelProps {
 
 function FieldLabel({ text, error, className = '', children }: FieldLabelProps) {
   return (
-<label className={`w-full ${className || 'block'}`}>        <span className="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-white/40">{text}</span>
+<label className={`field-label w-full ${className || 'block'}`}>        <span className="mb-2 block text-xs font-bold uppercase tracking-[0.25em] text-white/40">{text}</span>
       {children}
       {error ? <span className="mt-2 block text-xs font-semibold text-[#fca5a5]">{error}</span> : null}
     </label>
