@@ -658,7 +658,7 @@ aria-label={mobileMenuOpen ? 'Close mobile navigation menu' : 'Open mobile navig
 <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
 Engineering Excellence
 <br />
-<span className="text-[#7dd3fc] whitespace-nowrap">
+<span className="text-[#7dd3fc]">
 For Critical Infrastructure
 </span>
 </h1><div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
@@ -680,8 +680,8 @@ For Critical Infrastructure
   </span>
 
 </div>
-          <p className="mt-3 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
-  We design, install, test, and commission electrical systems for industrial and commercial projects, and supply the quality materials to build them. Every system we deliver is built for safe, reliable, and efficient operation.
+          <p className="hero-description mt-5 max-w-2xl">
+  We design, install, test, and commission electrical systems for industrial and commercial projects, and supply the materials needed to build them. Every solution is engineered for safe, reliable, and efficient operation.
 </p>
 
     <div className="mt-8 hero-cta-wrap">
@@ -718,7 +718,7 @@ hover:bg-[#1593ff]
     </div>
     <div>
       <span>Level 5 Graduate</span>
-      <strong>AA Tegbarid College · Building Electrical Engineering</strong>
+      <strong>Tegbareid Polytechnic College · Building Electrical Installation</strong>
     </div>
   </div>
               </div>
@@ -746,7 +746,7 @@ hover:bg-[#1593ff]
         </h2>
         <p className="text-lg leading-9 text-white/80 sm:text-xl">
           <span className="font-bold text-white">Powering Ethiopia's most critical buildings.</span>{' '}
-          Since 2018, <span className="font-semibold text-white">Biruk Trading &amp; Engineering</span>{' '}
+          Since 2018GC, <span className="font-semibold text-white">Biruk Trading &amp; Engineering</span>{' '}
           has designed, supplied, installed, and commissioned safe, reliable, and code-compliant
           electrical power systems for hospitals, government complexes, universities, and urban
           infrastructure across Ethiopia.
@@ -1484,7 +1484,10 @@ hover:bg-[#1593ff]
         <ArrowRight className={`h-4 w-4 transition-transform duration-300 ${showAllProducts ? 'rotate-90' : ''}`} />
       </button>
     </div>
-    <Reveal delay={100}>
+        <Reveal
+      delay={100}
+      className={!showAllProducts ? 'hidden sm:block' : ''}
+    >
       <div className="mt-10 rounded-3xl border border-[#0a84ff]/20 bg-gradient-to-br from-[#0a84ff]/8 to-transparent p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.35em] text-[#0a84ff]">Bulk Orders & Custom Supply</p>

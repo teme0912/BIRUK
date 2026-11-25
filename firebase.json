@@ -1,6 +1,5 @@
 {
   "hosting": {
-        "site": "biruk-electrical-installation",
     "public": "dist",
     "ignore": [
       "firebase.json",
