@@ -134,14 +134,15 @@ const portfolioProjects = [  {
 
 // Explicitly defined custom moving data array matching the detailed text found in the document photos
 const certifications = [
+   {
+    title: "Business License & Tax Registration Certificate",
+    file: "/biru2.jpg",
+  },
   {
     title: "Professional License",
     file: "/biru1.jpg",
   },
-  {
-    title: "Business License & Tax Registration Certificate",
-    file: "/biru2.jpg",
-  },
+ 
   {
     title: "Professional Certification",
     file: "/biru3.png",
