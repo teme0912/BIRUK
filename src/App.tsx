@@ -880,15 +880,15 @@ hover:bg-[#1593ff]
               selectedCapability ? 'max-h-[260px] opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
-            <div className="relative overflow-hidden rounded-2xl border border-[#0a84ff]/20 bg-[#0a84ff]/5 p-4">
+            <div className="capability-details relative overflow-hidden rounded-2xl border border-[#0a84ff]/20 bg-[#0a84ff]/5 p-4">
               <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#0a84ff] via-[#7dd3fc] to-[#10b981]" />
               <div className="mb-3 flex items-center justify-between">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7dd3fc]">
+                <p className="capability-details-title text-[10px] font-bold uppercase tracking-[0.3em] text-[#7dd3fc]">
                   Technical Details
                 </p>
-                <span className="text-[10px] font-semibold text-[#0a84ff] animate-pulse">● Live</span>
+                <span className="capability-details-status text-[10px] font-semibold text-[#0a84ff] animate-pulse">● Live</span>
               </div>
-              <p className="text-xs leading-6 text-white/70">
+              <p className="capability-details-description text-xs leading-6 text-white/70">
                 {selectedCapability ? capabilityDetails[selectedCapability] : ''}
               </p>
             </div>

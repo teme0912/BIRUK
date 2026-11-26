@@ -712,6 +712,15 @@ html[data-theme="light"] #about button[class*="rounded-xl"][class*="border-[#0a8
 html[data-theme="light"] #about button[class*="rounded-xl"] span {
   color: inherit;
 }
+html[data-theme="light"] #about .capability-details-title {
+  color: #075985;
+}
+html[data-theme="light"] #about .capability-details-status {
+  color: #0369a1;
+}
+html[data-theme="light"] #about .capability-details-description {
+  color: #334155;
+}
 
 /* Header navigation hover and mobile menu */
 html[data-theme="light"] .desktop-navigation a {
